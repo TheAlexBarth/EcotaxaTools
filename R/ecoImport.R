@@ -24,11 +24,11 @@ ecoImport = function(fileName, trim = F,customTrim = NULL){
     df = tdf[,which(colnames(df) %in% trimVect)]
 
   }
-  
+  names(df)[1] = "object_id" #dirty patch for annoying read-ins
   df$object_idNum = sapply(strsplit(df$object_id, split = "_(?=[^_]+$)", perl = T), "[[",2)
   df$object_id = sapply(strsplit(df$object_id, split = "_(?=[^_]+$)", perl = T), "[[",1)
   df$object_annotation_category = as.factor(df$object_annotation_category)
-  df$process_pixel = tdf[,which(names(tdf) %in% c("process_pixel","process_particle_pixel_size_mm"))] #reformatting for consistency in uvp or zooscan items
+  df$process_pixel = df[,which(names(df) %in% c("process_pixel","process_particle_pixel_size_mm"))] #reformatting for consistency in uvp or zooscan items
   
   return(df)
 }
