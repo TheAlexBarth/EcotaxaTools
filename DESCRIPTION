@@ -1,0 +1,12 @@
+Package: EcotaxaTools
+Title: Data wrangling and post-validation processing programs
+Version: 0.0.0.9000
+Authors@R: 
+    person("Alex", "Barth", , "AB93@email.sc.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7154-6260"))
+Description: A variety of helpful tools for dealing with tsv ecotaxa_export files.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
