@@ -7,7 +7,7 @@
 #' 
 #' @param df a data frame with object_annotation_category
 #' 
-#' 
+#' @noRd
 findMultiple = function(df){
   taxaNames = unique(df$object_annotation_category)
   if(length(taxaNames) == 0){
@@ -31,6 +31,7 @@ findMultiple = function(df){
 #'  
 #' @param df The input dataframe
 #' 
+#' @noRd
 getSelection = function(df){
   idMult = findMultiple(df)
   userChoice = menu(c(idMult,"All"), title = cat("Found these multipe labels.","Select one?",
@@ -62,7 +63,7 @@ getSelection = function(df){
 #' @param openImage if true, will find and open images. Requires file connection
 #' @param imagePath if open image is true, a path to the image folder must be provided
 #' 
-
+#' @export
 multiManager = function(path, morphoInclude = T, openImage = T,
                         imagePath = NULL){
   #possible errors

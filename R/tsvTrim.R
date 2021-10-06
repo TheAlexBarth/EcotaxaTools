@@ -3,6 +3,8 @@
 #' BE CAREFUL. this will edit the package to your local version of the package
 #' This makes your script less sharable but easiy if you are doing repeated
 #' work in house. If you reinstall package it will restore to the default
+#' 
+#' @export
 addCustomTrim = function(){
   trace(vectorSelect, edit = T)
 }
@@ -49,6 +51,8 @@ vectorSelect = function(trimMode){
 #' @param df the tsv file from ecoImport
 #' @param trimMode Which preset trim set "Minimal", "Morpho", or "Custom"
 #' @param customVector if "Custom" trimMode provide a vector of column names
+#' 
+#' @export
 #'
 tsvTrim = function(df, trimMode = "Minimal", customVector = NULL){
   if(trimMode == "Custom" & length(customVector) == 0){
