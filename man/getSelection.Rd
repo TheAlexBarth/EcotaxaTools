@@ -2,9 +2,12 @@
 % Please edit documentation in R/multimanager.R
 \name{getSelection}
 \alias{getSelection}
-\title{getMultiIndex - helper function for user input}
+\title{getSelection - helper function for user input}
 \usage{
 getSelection(df)
+}
+\arguments{
+\item{df}{The input dataframe}
 }
 \description{
 This calls for user input then asks which multiples to include

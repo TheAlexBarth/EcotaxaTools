@@ -14,8 +14,6 @@ multiManager(path, morphoInclude = T, openImage = T, imagePath = NULL)
 \item{openImage}{if true, will find and open images. Requires file connection}
 
 \item{imagePath}{if open image is true, a path to the image folder must be provided}
-
-\item{removeMultiple}{if true, this will delete the multiple< lines}
 }
 \description{
 This function is a tool which facilitates quick renaming of vignettes

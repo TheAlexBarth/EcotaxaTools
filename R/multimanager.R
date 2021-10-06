@@ -3,7 +3,10 @@
 #' Helper function to identify all types of multiple classes in 
 #' object_annotation_category
 #' 
+#'
+#' 
 #' @param df a data frame with object_annotation_category
+#' 
 #' 
 findMultiple = function(df){
   taxaNames = unique(df$object_annotation_category)
@@ -19,10 +22,14 @@ findMultiple = function(df){
   }
 }
 
-#' getMultiIndex - helper function for user input
+#' getSelection - helper function for user input
 #' 
 #' This calls for user input then asks which multiples to include
 #' then it provides the index for all multiples of interest
+#' 
+#' @importFrom utils menu
+#'  
+#' @param df The input dataframe
 #' 
 getSelection = function(df){
   idMult = findMultiple(df)
@@ -54,7 +61,6 @@ getSelection = function(df){
 #' @param morphoInclude if true, will create a column of boolean values. True indicates that row will be included in morpho-measurements. New rows from multimanager default to F.
 #' @param openImage if true, will find and open images. Requires file connection
 #' @param imagePath if open image is true, a path to the image folder must be provided
-#' @param removeMultiple if true, this will delete the multiple< lines
 #' 
 
 multiManager = function(path, morphoInclude = T, openImage = T,
