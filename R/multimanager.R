@@ -48,7 +48,7 @@ getSelection = function(df){
 #' For each ID entered, it will create a new line with that estimate
 #' Note that there will 
 #' 
-#' @importFrom ecotaxar -read_ecotaxa_tsv
+#' @importFrom ecotaxar read_ecotaxa_tsv
 #' 
 #' @param path location of file to choose, if not entered, a box will open to select file
 #' @param morphoInclude if true, will create a column of boolean values. True indicates that row will be included in morpho-measurements. New rows from multimanager default to F.
