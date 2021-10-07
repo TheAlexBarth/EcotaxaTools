@@ -1,4 +1,4 @@
-#' findMultiple - locate all multiple cateogories
+#' find_multiple - locate all multiple cateogories
 #' 
 #' Helper function to identify all types of multiple classes in 
 #' object_annotation_category
@@ -8,21 +8,21 @@
 #' @param df a data frame with object_annotation_category
 #' 
 #' @noRd
-findMultiple = function(df){
-  taxaNames = unique(df$object_annotation_category)
-  if(length(taxaNames) == 0){
+find_multiple <- function(df){
+  taxa_names <- unique(df$object_annotation_category)
+  if(length(taxa_names) == 0){
     stop("No taxa names provided")
   } else {
-    mults = grep("^multiple<",taxaNames)
+    mults <- grep("^multiple<",taxa_names)
   }
   if(length(mults) == 0){
     stop("No multiples found")
   } else{
-    return(taxaNames[mults])
+    return(taxa_names[mults])
   }
 }
 
-#' getSelection - helper function for user input
+#' get_selection - helper function for user input
 #' 
 #' This calls for user input then asks which multiples to include
 #' then it provides the index for all multiples of interest
@@ -32,15 +32,15 @@ findMultiple = function(df){
 #' @param df The input dataframe
 #' 
 #' @noRd
-getSelection = function(df){
-  idMult = findMultiple(df)
-  userChoice = menu(c(idMult,"All"), title = cat("Found these multipe labels.","Select one?",
+get_selection <-  function(df){
+  idMult <- find_multiple(df)
+  user_choice <- menu(c(idMult,"All"), title = cat("Found these multipe labels.","Select one?",
                              sep = "\n"))
-  if(userChoice > length(idMult)){
+  if(user_choice > length(idMult)){
     idMult = idMult
     
   } else {
-    idMult = idMult[userChoice]
+    idMult = idMult[user_choice]
     
   }
   index = which(df$object_annotation_category %in% idMult)
@@ -59,22 +59,22 @@ getSelection = function(df){
 #' @importFrom ecotaxar read_ecotaxa_tsv
 #' 
 #' @param path location of file to choose, if not entered, a box will open to select file
-#' @param morphoInclude if true, will create a column of boolean values. True indicates that row will be included in morpho-measurements. New rows from multimanager default to F.
-#' @param openImage if true, will find and open images. Requires file connection
-#' @param imagePath if open image is true, a path to the image folder must be provided
+#' @param morpho_include if true, will create a column of boolean values. True indicates that row will be included in morpho-measurements. New rows from multimanager default to F.
+#' @param open_image if true, will find and open images. Requires file connection
+#' @param image_path if open image is true, a path to the image folder must be provided
 #' 
 #' @export
-multiManager = function(path, morphoInclude = T, openImage = T,
-                        imagePath = NULL){
+multiManager = function(path, morpho_include = T, open_image = T,
+                        image_path = NULL){
   #possible errors
-  if(length(imagePath) == 0 & openImage == T){
+  if(length(image_path) == 0 & open_image == T){
     stop("imagePath not provided")
   }
-  ogDf = read_ecotaxa_tsv(path,trim = F) #open originalDf
-  outDf = ogDf # replicate output df
+  ogDf <- read_ecotaxa_tsv(path,trim = F) #open originalDf
+  outDf <- ogDf # replicate output df
   
-  if(morphoInclude == T){
-    outDf$morphoInclude = rep(T, nrow(outDf))
+  if(morpho_include == T){
+    outDf$morpho_include = rep(T, nrow(outDf))
   }
   
   
