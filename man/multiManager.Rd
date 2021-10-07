@@ -4,16 +4,16 @@
 \alias{multiManager}
 \title{multiManager - a tool to re-label vignettes with multiple individuals}
 \usage{
-multiManager(path, morphoInclude = T, openImage = T, imagePath = NULL)
+multiManager(path, morpho_include = T, open_image = T, image_path = NULL)
 }
 \arguments{
 \item{path}{location of file to choose, if not entered, a box will open to select file}
 
-\item{morphoInclude}{if true, will create a column of boolean values. True indicates that row will be included in morpho-measurements. New rows from multimanager default to F.}
+\item{morpho_include}{if true, will create a column of boolean values. True indicates that row will be included in morpho-measurements. New rows from multimanager default to F.}
 
-\item{openImage}{if true, will find and open images. Requires file connection}
+\item{open_image}{if true, will find and open images. Requires file connection}
 
-\item{imagePath}{if open image is true, a path to the image folder must be provided}
+\item{image_path}{if open image is true, a path to the image folder must be provided}
 }
 \description{
 This function is a tool which facilitates quick renaming of vignettes
