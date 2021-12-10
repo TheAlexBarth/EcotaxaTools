@@ -1,3 +1,15 @@
+#' system_save - this function is needed to write to system. Currently Windows
+#' 
+#' @param new_list the updated list to save
+system_save <- function(){
+  system_vers <- getRversion()
+  first_two <- strsplit(as.character(system_vers),split = "\\.")[[1]][1:2]
+  ver <- paste(first_two[1],first_two[2],sep = ".")
+  sys_path <- paste0("~/R/win-library/",ver,"/EcotaxaTools/data/taxo_list.rda")
+  
+  
+}
+
 #' taxo_warning - a function to give a warning before editing the category file
 taxo_warning <- function(){
   qual <- F
