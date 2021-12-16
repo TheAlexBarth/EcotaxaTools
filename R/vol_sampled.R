@@ -33,7 +33,7 @@ vol_sampled <- function(cast_name, path, method, custom_range, equal_step = 10,
                             or Custom"))
   
   #count the number of images per depth bin
-  rdf <- as.data.frame(table((cut(trim_dat[,3],breaks = break_vect))))
+  rdf <- as.data.frame(table((cut(trim_dat,breaks = break_vect))))
   rdf[,3] <- rdf[,2] * 1.1
   
   names(rdf) <- c("depth_bin","num_img","vol_sampled")
