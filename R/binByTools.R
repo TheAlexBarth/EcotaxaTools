@@ -118,6 +118,8 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
 #' @param custom_range vector of ranges
 #' @param equal_step create equal steps of this size
 #' @param equal_number create this number of ranges
+#' 
+#' @export
 vol_sampled <- function(cast_name, path, method, custom_range, equal_step = 10,
                         equal_number = 100){
   
