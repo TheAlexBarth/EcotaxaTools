@@ -140,15 +140,12 @@ multi_manager <-  function(path = NULL, morpho_include = T){
         if(inCheck){
           known <- c(known,tmp_answer) #add to known names
           number <- as.numeric(readline(cat("How Many?",">>> ",sep = "\n")))
-<<<<<<< HEAD
           while(!is.numeric(number)){
             cat(" ","Non-numeric Entry Provided"," ","Try Again",sep = "\n")
             number <- as.numeric(readline(cat("How Many?",">>> ",sep = "\n")))
           }
           new_catg <- rep(tmp_answer,number)
-=======
           new_catg <- rep(tmp_answer,number) #make repeat of number
->>>>>>> 2bee2a932a4802b536037bcd5b14e10de9a05bb8
         } else {
           iter <- iter - 1 #undo this lap
           next #go back and start over
