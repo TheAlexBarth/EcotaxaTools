@@ -136,6 +136,10 @@ multi_manager = function(path = NULL, morpho_include = T){
         if(inCheck){
           known <- c(known,tmp_answer)
           number <- as.numeric(readline(cat("How Many?",">>> ",sep = "\n")))
+          while(!is.numeric(number)){
+            cat(" ","Non-numeric Entry Provided"," ","Try Again",sep = "\n")
+            number <- as.numeric(readline(cat("How Many?",">>> ",sep = "\n")))
+          }
           new_catg <- rep(tmp_answer,number)
         } else {
           iter <- iter - 1 #undo this lap
