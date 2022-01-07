@@ -140,7 +140,7 @@ multi_manager <-  function(path = NULL, morpho_include = T){
         if(inCheck){
           known <- c(known,tmp_answer) #add to known names
           number <- as.numeric(readline(cat("How Many?",">>> ",sep = "\n")))
-          while(!is.numeric(number)){
+          while(is.na(number)){
             cat(" ","Non-numeric Entry Provided"," ","Try Again",sep = "\n")
             number <- as.numeric(readline(cat("How Many?",">>> ",sep = "\n")))
           }
