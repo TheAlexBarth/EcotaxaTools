@@ -60,6 +60,9 @@ select_msg <- function(iter){
 }
 
 #' chk_input - helper to check input against known values
+#' 
+#' @param input the user-listed name
+#' @param known a vector of known names
 chk_input <- function(input,known){
   if(input %in% known){
     return(TRUE)
@@ -80,15 +83,14 @@ chk_input <- function(input,known){
 #' For each ID entered, it will create a new line with that estimate
 #' Note that there will 
 #' 
-#' @importFrom ecotaxar read_ecotaxa_tsv
 #' @importFrom svDialogs dlg_open
 #' 
 #' @param path location of file to choose, if not entered, a box will open to select file
 #' @param morpho_include if true, will create a column of boolean values. True indicates that row will be included in morpho-measurements. New rows from multimanager default to F.
 #' 
 #' @export
-multi_manager = function(path = NULL, morpho_include = T){
-  
+multi_manager <-  function(path = NULL, morpho_include = T){
+  print("WARNING: MAKE SURE YOU ASSIGNED THIS FUNCTION TO A NEW VARIABLE")
   ##
   # Set up:
   ##
@@ -97,7 +99,7 @@ multi_manager = function(path = NULL, morpho_include = T){
   if(is.null(path)){
     path <- dlg_open()$res
   }
-  ogDf <- as.data.frame(read_ecotaxa_tsv(path,trim = F)) #open originalDf
+  ogDf <- as.data.frame(read_etx(path)) #open originalDf
   outDf <- ogDf
   
   known <- unique(ogDf$object_annotation_category) #get the known names to cross ref
@@ -114,40 +116,54 @@ multi_manager = function(path = NULL, morpho_include = T){
   # Main Driver
   ##
   
-  new_id <- NULL # set up vector of unknown length
-  new_name <- NULL # set up vector for new names
+  mult_list <- vector(mode = "list",length = length(index))
   for(i in 1:length(index)){
     done <- FALSE #set up for while loop
     vig <- ogDf$object_id[index[i]] # Get object_id
-    catg <- ogDf$object_annotation_category[index[i]]
+    catg <- ogDf$object_annotation_category[index[i]] #get category name
     
     vig_names <- NULL #set up smaller holder
-    iter <- 0
+    iter <- 0 #set the while loop to 0
     while(!done){
-      iter <- iter + 1
+      iter <- iter + 1 #start the count
       cat("Vignette: ",vig,"\n",
-          "Listed as: ",catg,"\n",sep = "")
-      tmp_answer <- readline(cat(select_msg(iter),sep ="\n"))
+          "Listed as: ",catg,"\n"," ",sep = "") # print look up info 
+      tmp_answer <- readline(cat(select_msg(iter),sep ="\n")) #get organism
       if(tmp_answer == "" & iter > 1){ #check for exit
-        done <- T
-        break
+        cat("Done with: ",vig, " (",i,"/",length(index),")","\n",
+            " ","\n",sep = "")
+        if(i/length(index) <1){cat("On to the next one!","\n"," ","\n",sep ="")}
+        done <- T #set to done
+        break #break the while loop
       } else {
-        inCheck <- chk_input(tmp_answer,known)
+        inCheck <- chk_input(tmp_answer,known) #check if answer is known
         if(inCheck){
-          known <- c(known,tmp_answer)
+          known <- c(known,tmp_answer) #add to known names
           number <- as.numeric(readline(cat("How Many?",">>> ",sep = "\n")))
-          new_catg <- rep(tmp_answer,number)
+          new_catg <- rep(tmp_answer,number) #make repeat of number
         } else {
           iter <- iter - 1 #undo this lap
           next #go back and start over
         }
       }
-      vig_names <- c(vig_names,new_catg)
+      vig_names <- c(vig_names,new_catg) #add to for this vignette
     }
-    
+    tdf <- ogDf[rep(index[i],length(vig_names)),] #create rows for length vign
+    tdf$object_id <- paste(tdf$object_id,"_r",c(1:length(vig_names)),
+                           sep = "") #create new object_ID's
+    tdf$object_annotation_category <- vig_names
+    mult_list[[i]] <- tdf
   }
   
-
+  #Save output
+  multi_names <- do.call(rbind,mult_list)
+  if(morpho_include == T){
+    multi_names$morpho_include <- F
+  }
+  outDf <- outDf[-index,] #remove the original rows
+  retDf <- rbind(outDf,multi_names)
+  retDf$object_annotation_status <- "multi_managed!"
+  return(retDf)
 }
 
 
