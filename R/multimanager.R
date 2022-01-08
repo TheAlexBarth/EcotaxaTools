@@ -165,9 +165,9 @@ multi_manager <-  function(path = NULL, morpho_include = T){
   if(morpho_include == T){
     multi_names$morpho_include <- F
   }
+  multi_names$object_annotation_status <- "multi_manager"
   outDf <- outDf[-index,] #remove the original rows
   retDf <- rbind(outDf,multi_names)
-  retDf$object_annotation_status <- "multi_managed!"
   return(retDf)
 }
 
