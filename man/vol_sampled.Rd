@@ -19,7 +19,7 @@ vol_sampled(
 }}
 
 \item{path}{\itemize{
-\item where the dat and meta files are located
+\item where the UVP project are located
 }}
 
 \item{method}{"Equal Space", "Custom", "Equal Number" "Zooscan"}

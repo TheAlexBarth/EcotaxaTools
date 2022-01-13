@@ -3,7 +3,7 @@
 #' @importFrom utils read.table
 #' 
 #' @param cast_name - the name of the cast
-#' @param path - where the dat and meta files are located
+#' @param path - where the UVP project are located
 #' @param method "Equal Space", "Custom", "Equal Number" "Zooscan"
 #' @param custom_range vector of ranges
 #' @param equal_step create equal steps of this size
@@ -12,11 +12,13 @@
 #' @export
 vol_sampled <- function(cast_name, path, method, custom_range, equal_step = 10,
                         equal_number = 100){
-  
+  dir_path <- paste(path,"work",cast_name,sep = "/") #set up path to the work folder
+  dat_name <- paste(cast_name,"datfile.txt",sep = "_")
+  meta_name <- paste(cast_name,"meta.txt",sep = "_")
   #read in first images
-  initial_dat <- read.table(paste(path,cast_name,"_datfile.txt",sep = ""),
+  initial_dat <- read.table(paste(dir_path,dat_name,sep = "/"),
                             header = F, sep = ";")
-  meta_dat <- read.table(paste(path,cast_name,"_meta.txt",sep = ""),
+  meta_dat <- read.table(paste(dir_path,meta_name,sep = "/"),
                          header = T, sep = ";")
   
   #trim to first image
