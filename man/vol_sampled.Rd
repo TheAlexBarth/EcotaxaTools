@@ -10,7 +10,8 @@ vol_sampled(
   method,
   custom_range,
   equal_step = 10,
-  equal_number = 100
+  equal_number = 100,
+  depth_as_num = F
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ vol_sampled(
 \item{equal_step}{create equal steps of this size}
 
 \item{equal_number}{create this number of ranges}
+
+\item{depth_as_num}{logical to ask if depth should be printed as number}
 }
 \description{
 vol_sampled - get the volume sampled from a UVP cast
