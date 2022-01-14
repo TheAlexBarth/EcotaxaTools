@@ -25,11 +25,12 @@ vol_sampled <- function(cast_name, path, method, custom_range, equal_step = 10,
   #trim to first image
   first_img <- meta_dat$firstimage
   trim_dat <- initial_dat[initial_dat[,1] >= first_img,]
-  trim_dat[,3] <- as.numeric(trim_dat[,3])/10 + 1.2 #convert to msw and sensor offset
+  trim_dat[,3] <- round(as.numeric(trim_dat[,3])/10 + 1.2) #convert to msw and sensor offset
   
   # get depth bin
   break_vect <- switch(method, 
-                       "Equal Space" = seq(0,max(trim_dat[,3]),equal_step),
+                       "Equal Space" = seq(0,max(trim_dat[,3])+equal_step,
+                                           equal_step),
                        "Equal Number" = equal_number,
                        "Custom" = custom_range,
                        stop("Invalid Method, needs to be Equal Space, Equal Number,
@@ -42,7 +43,7 @@ vol_sampled <- function(cast_name, path, method, custom_range, equal_step = 10,
   #pull lower depth if that is better
   if(depth_as_num == T){
     rdf[,1] <- regmatches(rdf[,1],regexpr("(?<=,).*(?=])",rdf[,1],perl = T))
-    rdf[,1] <- as.numeric(rdf[,1])
+    rdf[,1] <- as.numxeric(rdf[,1])
     names(rdf) <- c("depth","num_img","vol_sampled")
   } else {
     names(rdf) <- c("depth_bin","num_img","vol_sampled")
