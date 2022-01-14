@@ -36,7 +36,7 @@ nearest <- function(number,vector){
 #' @param possible possible column names
 get_col_name <- function(df, goal_name = NULL,possible = NULL){
   if(is.null(possible)){
-    possible <- swtich(goal_name,
+    possible <- switch(goal_name,
                        "object_annotation_category" = c("object_annotation_category",
                                                         "name"),
                        "depth_offset" = c("depth_including_offset",

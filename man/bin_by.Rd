@@ -13,7 +13,7 @@ bin_by(df, method, custom_range = NULL, equal_step = 10, equal_number = 100)
 
 \item{custom_range}{vector of ranges}
 
-\item{equal_step}{create equal steps of this size}
+\item{equal_step}{create equal steps of this size, it will be centered (d = 10 includes 5-15)}
 
 \item{equal_number}{create this number of ranges}
 }
