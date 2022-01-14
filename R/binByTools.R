@@ -23,6 +23,7 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
     depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
     bins <- seq(0,max(df[,depthcol])+equal_step,equal_step)#set up bin sequence
     set_bins <- unlist(lapply(df[,depthcol],nearest,bins)) #choose nearest bin
+    return(set_bins)
   }
 }
 
