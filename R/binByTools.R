@@ -5,7 +5,7 @@
 #' @param df the vector to include to be cut. Should be an ecotaxa tsv export
 #' @param method "Equal Space", "Custom", "Equal Number" "Zooscan"
 #' @param custom_range vector of ranges
-#' @param equal_step create equal steps of this size
+#' @param equal_step create equal steps of this size, it will be centered (d = 10 includes 5-15)
 #' @param equal_number create this number of ranges
 #'
 #' @export 
@@ -13,14 +13,15 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
                    equal_number = 100){
 
   if(method == "Zooscan"){
-    return(df$object_depth_max)
-  } else {
+    return(df$object_depth_max) #return column name for depth breaks
+  } else if (method %in% c("Equal Number","Custom")){
+    depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
     break_vect <- switch(method, "Custom" = custom_range, 
-                         "Equal Space" = equal_step,
-                         "Equal Number" = equal_number,
-                         stop("Invalid Method argument. Choose 'Equal Space',
-                         'Custom','Equal Number','Zooscan'"))
-    return(cut(df$object_depth_max, breaks = break_vect))
+                         "Equal Number" = equal_number)
+    return(cut(df[,depthcol], breaks = break_vect)) #cut into character vector
+  } else if (method == "Equal Step"){
+    bins <- seq(0,max(df[,depthcol])+equal_step,equal_step)#set up bin sequence
+    set_bins <- unlist(lapply(nearest(df[,depthcol],bins))) #choose nearest bin
   }
 }
 
@@ -41,33 +42,34 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
 bin_by_df <- function(df, method, custom_range, equal_step = 10,
                       equal_number = 100, secondary = NULL, 
                       secondary_breaks = NULL, return_list = F){
-  df = as.data.frame(df) #why do tibbles exist?!?
-  df$object_annotation_category = as.factor(df$object_annotation_category)
+  cat_col <- get_col_name(df,"object_annotation_category")
   
-  depth_bins <- bin_by(df, method = method,custom_range, equal_step = 10,
-                         equal_number = 100)
-  unique_bins <- unique(depth_bins)
+  df = as.data.frame(df) #why do tibbles exist?!?
+  df[,cat_col] = as.factor(df[,cat_col]) #set to factor so not lost in split
+  
+  depth_bins <- bin_by(df, method = method,custom_range, equal_step = equal_step,
+                         equal_number = equal_number) #get depth bins
+  unique_bins <- unique(depth_bins) #unique entries
     
   if(length(secondary) == 0){
-    calc_list <- vector(mode = "list",length = length(unique_bins))
+    calc_list <- vector(mode = "list",length = length(unique_bins)) #list for dfs
     for(i in 1:length(unique_bins)){
-       cat_table <- table(df$object_annotation_category[depth_bins 
-                                                       == unique_bins[i]])
-       calc_list[[i]] <- as.data.frame(cat_table)
+       cat_table <- table(df[,cat_col][depth_bins == unique_bins[i]]) #table of counts
+       calc_list[[i]] <- as.data.frame(cat_table) #save to list
     }
     rdf <- as.data.frame(matrix(nrow = length(unique_bins),
-                                ncol = length(unique(df$object_annotation_category))))
-    row.names(rdf) <- unique_bins
-    names(rdf) <- sort(unique(df$object_annotation_category))
+                                ncol = length(unique(df[,cat_col])))) #set-data frame
+    row.names(rdf) <- unique_bins #row-names as depth bins
+    names(rdf) <- sort(unique(df[,cat_col])) #columns as unique taxa
     for(r in 1:nrow(rdf)){
-       rdf[r,] <- calc_list[[r]][,2]
+       rdf[r,] <- calc_list[[r]][,2] #assign to depthrow (possible to speed up with lapply)
     }
   } else if(length(secondary) > 0){
     if(class(secondary) == "numeric"){
       sec_levels <- as.character((cut(df[,which(names(df)==secondary)],
-                                   secondary_breaks)))
+                                   secondary_breaks))) #make a secondary cut
     } else if(class(secondary) == "character"){
-      sec_levels <- df[,which(names(df)==secondary)]
+      sec_levels <- df[,which(names(df)==secondary)] #by categories
     } else{
       stop("Error in secondary class - needs to be numeric or character")
     }
@@ -88,9 +90,9 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
       }
       #count up sublists
       rdl[[l]] <- as.data.frame(matrix(nrow = length(unique_bins),
-                                       ncol = length(unique(df$object_annotation_category))))
+                                       ncol = length(unique(df[,cat_col]))))
       row.names(rdl[[l]]) <- unique_bins
-      names(rdl[[l]]) <- sort(unique(df$object_annotation_category))
+      names(rdl[[l]]) <- sort(unique(df[,cat_col]))
       for(r in 1:nrow(rdl[[l]])){
         rdl[[l]][r,] <- calc_list[[l]][[r]][,2] #fill out dataframe
       }
