@@ -43,7 +43,7 @@ vol_sampled <- function(cast_name, path, method, custom_range, equal_step = 10,
   #pull lower depth if that is better
   if(depth_as_num == T){
     rdf[,1] <- regmatches(rdf[,1],regexpr("(?<=,).*(?=])",rdf[,1],perl = T))
-    rdf[,1] <- as.numxeric(rdf[,1])
+    rdf[,1] <- as.numeric(rdf[,1])
     names(rdf) <- c("depth","num_img","vol_sampled")
   } else {
     names(rdf) <- c("depth_bin","num_img","vol_sampled")
