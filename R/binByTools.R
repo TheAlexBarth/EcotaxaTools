@@ -59,12 +59,28 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
        cat_table <- table(df[,cat_col][depth_bins == unique_bins[i]]) #table of counts
        calc_list[[i]] <- as.data.frame(cat_table) #save to list
     }
-    rdf <- as.data.frame(matrix(nrow = length(unique_bins),
-                                ncol = length(unique(df[,cat_col])))) #set-data frame
-    row.names(rdf) <- unique_bins #row-names as depth bins
-    names(rdf) <- sort(unique(df[,cat_col])) #columns as unique taxa
-    for(r in 1:nrow(rdf)){
-       rdf[r,] <- calc_list[[r]][,2] #assign to depthrow (possible to speed up with lapply)
+    #need special approach for Equal Step due to different nature of bin_by
+    if(method != "Equal Step"){
+      rdf <- as.data.frame(matrix(nrow = length(unique_bins),
+                                  ncol = length(unique(df[,cat_col])))) #set-data frame
+      row.names(rdf) <- unique_bins #row-names as depth bins
+      names(rdf) <- sort(unique(df[,cat_col])) #columns as unique taxa
+      for(r in 1:nrow(rdf)){
+         rdf[r,] <- calc_list[[r]][,2] #assign to depthrow (possible to speed up with lapply)
+      }
+    } else if(method == "Equal Step"){
+      depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
+      bin_length <- seq(0,max(df[,depthcol])+equal_step,equal_step)#set up bin sequence
+      
+      rdf <- as.data.frame(matrix(nrow = length(bin_length),
+                                  ncol = length(unique(df[,cat_col])))) #rdf is a lot bigger
+      row.names(rdf) <- bin_length
+      names(rdf) <- sort(unique(df[,cat_col]))
+      for(i in 1:length(unique_bins)){
+        rdex <- which(bin_length == unique_bins[i])
+        rdf[rdex,] <- calc_list[[i]][,2]
+      }
+      rdf[is.na(rdf)] <- 0 #alter all empty rows to 0
     }
   } else if(length(secondary) > 0){
     if(class(secondary) == "numeric"){
@@ -91,14 +107,30 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
         calc_list[[l]][[i]] <- as.data.frame(cat_table)
       }
       #count up sublists
-      rdl[[l]] <- as.data.frame(matrix(nrow = length(unique_bins),
-                                       ncol = length(unique(df[,cat_col]))))
-      row.names(rdl[[l]]) <- unique_bins
-      names(rdl[[l]]) <- sort(unique(df[,cat_col]))
-      for(r in 1:nrow(rdl[[l]])){
-        rdl[[l]][r,] <- calc_list[[l]][[r]][,2] #fill out dataframe
+      # needs special condition if using equal step
+      if(method != "Equal Step"){
+        rdl[[l]] <- as.data.frame(matrix(nrow = length(unique_bins),
+                                         ncol = length(unique(df[,cat_col]))))
+        row.names(rdl[[l]]) <- unique_bins
+        names(rdl[[l]]) <- sort(unique(df[,cat_col]))
+        for(r in 1:nrow(rdl[[l]])){
+          rdl[[l]][r,] <- calc_list[[l]][[r]][,2] #fill out dataframe
+        }
+        rdl[[l]]$bin <- unique(sec_levels)[l]
+      } else if(method == "Equal Step"){
+        depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
+        bin_length <- seq(0,max(df[,depthcol])+equal_step,equal_step)#set up bin sequence
+        
+        rdl[[l]] <- as.data.frame(matrix(nrow = length(bin_length),
+                                    ncol = length(unique(df[,cat_col])))) #rdf is a lot bigger
+        row.names(rdl[[l]]) <- bin_length
+        names(rdl[[l]]) <- sort(unique(df[,cat_col]))
+        for(i in 1:length(unique_bins)){
+          rdex <- which(bin_length == unique_bins[i])
+          rdl[[l]][rdex,] <- calc_list[[i]][,2]
+        }
+        rdl[[l]][is.na(rdl[[l]])] <- 0 #alter all empty rows to 0
       }
-      rdl[[l]]$bin <- unique(sec_levels)[l]
     }
     if(return_list == T){
       return(rdl)
