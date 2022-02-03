@@ -44,7 +44,7 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
 bin_by_df <- function(df, method, custom_range, equal_step = 10,
                       equal_number = 100, secondary = NULL, 
                       secondary_breaks = NULL, return_list = F){
-  cat_col <- get_col_name(df,"object_annotation_category")
+  cat_col <- get_col_name(df,"taxo_name")
   
   df = as.data.frame(df) #why do tibbles exist?!?
   df[,cat_col] = as.factor(df[,cat_col]) #set to factor so not lost in split
@@ -102,7 +102,7 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
       
       #get sub-lists of data
       for(i in 1:length(unique_bins)){
-        cat_table <- table(macro_list[[l]]$object_annotation_category[depth_bins 
+        cat_table <- table(macro_list[[l]]$taxo_name[depth_bins 
                                                                       == unique_bins[i]])
         calc_list[[l]][[i]] <- as.data.frame(cat_table)
       }

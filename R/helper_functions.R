@@ -37,8 +37,8 @@ nearest <- function(number,vector){
 get_col_name <- function(df, goal_name = NULL,possible = NULL){
   if(is.null(possible)){
     possible <- switch(goal_name,
-                       "object_annotation_category" = c("object_annotation_category",
-                                                        "name"),
+                       "taxo_name" = c("object_annotation_category",
+                                                        "name", "taxo_name"),
                        "depth_offset" = c("depth_including_offset",
                                           "depth_offset"),
                        stop("goal_name not in pre-selected options - see source code"))
