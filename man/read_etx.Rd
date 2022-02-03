@@ -4,7 +4,7 @@
 \alias{read_etx}
 \title{read_etx - a function to read tsv from ecotaxa}
 \usage{
-read_etx(path)
+read_etx(path, format_headers = T)
 }
 \arguments{
 \item{path}{the file to open}

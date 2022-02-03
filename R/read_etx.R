@@ -23,12 +23,10 @@ format_header <- function(df) {
 #' 
 #' @param path the file to open
 #' @param format_headers - if true, it will remove object_. This is required for code compatibiility
-#' @param add_mm if true this will add columns for morphology in mm
-#' @param mm_cols specify which columns to add mm to
 #' 
 #' @rdname read_etx
 #' @export
-read_etx <- function(path) {
+read_etx <- function(path, format_headers = T) {
   df <- read.table(path,header = T,as.is = T,
                    fileEncoding="UTF-8-BOM")
   if(format_headers == T) {
