@@ -7,6 +7,8 @@
 #' unless you renamed converted columns
 #' 
 #' @param df - the data frame to feed it
+#' 
+#' @export
 ellps_vol  <-  function(df) {
   major_mm <- df$major * df$pixel_mm;
   minor_mm <- df$minor * df$pixel_mm;
