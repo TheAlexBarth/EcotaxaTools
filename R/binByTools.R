@@ -13,7 +13,7 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
                    equal_number = 100){
 
   if(method == "Zooscan"){
-    return(df$object_depth_max) #return column name for depth breaks
+    return(df$sample_id) #return column name for depth breaks
   } else if (method %in% c("Equal Number","Custom")){
     depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
     break_vect <- switch(method, "Custom" = custom_range, 
