@@ -9,7 +9,8 @@ format_header <- function(df) {
   names(df) <- sub("object_","",names(df));
   
   #specific cases
-  names(df)[which(names(df) %in% c("annotation_category","name"))] <- "taxo_name";
+  names(df)[which(names(df) %in% c("annotation_category","name",
+                                   'taxo_name'))] <- "taxo_name";
   names(df)[which(names(df) %in% c("process_particle_pixel_size_mm",
                                    "process_pixel"))] <- "pixel_mm";
   
