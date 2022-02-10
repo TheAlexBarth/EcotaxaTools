@@ -145,6 +145,51 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
   }
     return(rdf)
 }
+
+#' ecopart_vol_bin - get binned volumes from ecopart volume output
+#' 
+#' @param df a data frame to enter
+#' @param method "Equal Space", "Custom", "Equal Number"
+#' 
+#' @param custom_range vector of ranges
+#' @param equal_step create equal steps of this size
+#' @param equal_number create this number of ranges
+#' 
+#' @importFrom stats aggregate
+#' 
+#' @export
+ecopart_vol_bin <- function(df,method,custom_range = NULL,
+                            equal_step = 10, equal_number = 100) {
   
+  #check that df is correct format
+  if(!identical(names(df), c("depth", "vol_sampled"))) {
+    stop('Input data frame must be in two-column layout with depth, vol_sampled')
+  }
   
+  #check methods arguement
+  if(!method %in% c("Equal Number",'Equal Space',"Custom")) {
+    stop('Method argument must be either "Equal Number","Equal Space", or "Custom"')
+  }
   
+  #run for custom method and equal number
+  if(method %in% c('Custom','Equal Number')) {
+    
+    #check custom range looks good
+    if(!all(sapply(custom_range, is.numeric))) {
+      stop('Custom method requires an input break vector of numeric type')
+    }
+    
+    break_vect <- switch(method,
+                         'Custom' = custom_range,
+                         'Equal Number' = equal_number)
+    bins <- cut(df$depth, breaks = break_vect)
+    
+  } else if(method == 'Equal Space') {
+    bin_range <- seq(0,max(df$depth),equal_step) # make a range 0-max df depth by bin size
+    bins <- sapply(df$depth, nearest, bin_range) # make bins
+  }
+  
+  out_df <- aggregate(df$vol_sampled,by = list(depth_bin = bins),FUN = sum)
+  names(out_df) <- c('depth_bin','vol_sampled')
+  return(out_df)
+}
