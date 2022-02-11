@@ -4,16 +4,7 @@
 \alias{bin_by_df}
 \title{bin_by_df - returns a data frame for counts by bin}
 \usage{
-bin_by_df(
-  df,
-  method,
-  custom_range,
-  equal_step = 10,
-  equal_number = 100,
-  secondary = NULL,
-  secondary_breaks = NULL,
-  return_list = F
-)
+bin_by_df(df, method, custom_range, equal_step = 10, equal_number = 100)
 }
 \arguments{
 \item{df}{the vector to include to be cut. Should be an ecotaxa tsv export}
@@ -25,12 +16,6 @@ bin_by_df(
 \item{equal_step}{create equal steps of this size}
 
 \item{equal_number}{create this number of ranges}
-
-\item{secondary}{a secondary characteristic (like esd) to split these on}
-
-\item{secondary_breaks}{the range at which to break the secondary var}
-
-\item{return_list}{a T/F to get back a list of secondary breaks}
 }
 \description{
 will count number of observations for each bin then return a count dataframe
