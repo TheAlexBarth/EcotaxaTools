@@ -109,7 +109,9 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
     rdf[is.na(rdf)] <- 0 #alter all empty rows to 0
   }
   rdf$db <- big_bins
-  rdf <- order_bins(rdf)
+  
+  if(method != "Zooscan"){rdf <- order_bins(rdf)}
+  
   return(rdf)
 }
 
