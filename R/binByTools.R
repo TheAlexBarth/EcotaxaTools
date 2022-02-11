@@ -19,14 +19,14 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
     break_vect <- switch(method, "Custom" = custom_range, 
                          "Equal Number" = equal_number)
     return(cut(df[,depthcol], breaks = break_vect)) #cut into character vector
-  } else if (method == "Equal Step"){
+  } else if (method == "Equal Space"){
     depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
     bins <- seq(0,max(df[,depthcol])+equal_step,equal_step)#set up bin sequence
     set_bins <- unlist(lapply(df[,depthcol],nearest,bins)) #choose nearest bin
     return(set_bins)
   } else {
     stop("Error: Invalid method arguement. Choose from 'Zooscan','Equal Number',
-         'Custom', or 'Equal Step'.")
+         'Custom', or 'Equal Space'.")
   }
 }
 
