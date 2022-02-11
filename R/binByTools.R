@@ -47,9 +47,9 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
 bin_by_df <- function(df, method, custom_range, equal_step = 10,
                       equal_number = 100, secondary = NULL, 
                       secondary_breaks = NULL, return_list = F){
-  cat_col <- get_col_name(df,"taxo_name")
   
   df = as.data.frame(df) #why do tibbles exist?!?
+  cat_col <- get_col_name(df,"taxo_name")
   df[,cat_col] = as.factor(df[,cat_col]) #set to factor so not lost in split
   
   depth_bins <- bin_by(df, method = method,custom_range, equal_step = equal_step,
