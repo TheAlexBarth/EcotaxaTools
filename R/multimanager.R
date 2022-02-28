@@ -119,7 +119,7 @@ multi_manager <-  function(path = NULL, morpho_include = T){
   mult_list <- vector(mode = "list",length = length(index))
   for(i in 1:length(index)){
     done <- FALSE #set up for while loop
-    vig <- ogDf$object_id[index[i]] # Get object_id
+    vig <- ogDf$obj_id[index[i]] # Get obj_id
     catg <- ogDf$taxo_name[index[i]] #get category name
     
     vig_names <- NULL #set up smaller holder
@@ -154,8 +154,8 @@ multi_manager <-  function(path = NULL, morpho_include = T){
       vig_names <- c(vig_names,new_catg) #add to for this vignette
     }
     tdf <- ogDf[rep(index[i],length(vig_names)),] #create rows for length vign
-    tdf$object_id <- paste(tdf$object_id,"_r",c(1:length(vig_names)),
-                           sep = "") #create new object_ID's
+    tdf$obj_id <- paste(tdf$obj_id,"_r",c(1:length(vig_names)),
+                           sep = "") #create new obj_id's
     tdf$taxo_name <- vig_names
     mult_list[[i]] <- tdf
   }
