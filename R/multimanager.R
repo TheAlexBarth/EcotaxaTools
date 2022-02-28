@@ -9,7 +9,7 @@
 #' 
 #' @noRd
 find_multiple <- function(df){
-  taxa_names <- unique(df$object_annotation_category)
+  taxa_names <- unique(df$taxo_name)
   if(length(taxa_names) == 0){
     stop("No taxa names provided")
   } else {
@@ -42,7 +42,7 @@ get_selection <-  function(df){
     idMult = idMult[user_choice]
     
   }
-  index = which(df$object_annotation_category %in% idMult)
+  index = which(df$taxo_name %in% idMult)
   return(index)
 }
 
@@ -102,7 +102,7 @@ multi_manager <-  function(path = NULL, morpho_include = T){
   ogDf <- as.data.frame(read_etx(path)) #open originalDf
   outDf <- ogDf
   
-  known <- unique(ogDf$object_annotation_category) #get the known names to cross ref
+  known <- unique(ogDf$taxo_name) #get the known names to cross ref
   if(is.null(known)){stop("no 'object_annotation_category' column")} #format check
   
   if(morpho_include == T){
@@ -120,7 +120,7 @@ multi_manager <-  function(path = NULL, morpho_include = T){
   for(i in 1:length(index)){
     done <- FALSE #set up for while loop
     vig <- ogDf$object_id[index[i]] # Get object_id
-    catg <- ogDf$object_annotation_category[index[i]] #get category name
+    catg <- ogDf$taxo_name[index[i]] #get category name
     
     vig_names <- NULL #set up smaller holder
     iter <- 0 #set the while loop to 0
@@ -156,7 +156,7 @@ multi_manager <-  function(path = NULL, morpho_include = T){
     tdf <- ogDf[rep(index[i],length(vig_names)),] #create rows for length vign
     tdf$object_id <- paste(tdf$object_id,"_r",c(1:length(vig_names)),
                            sep = "") #create new object_ID's
-    tdf$object_annotation_category <- vig_names
+    tdf$taxo_name <- vig_names
     mult_list[[i]] <- tdf
   }
   
