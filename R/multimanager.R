@@ -1,11 +1,11 @@
 #' find_multiple - locate all multiple cateogories
 #' 
 #' Helper function to identify all types of multiple classes in 
-#' object_annotation_category
+#' annotation_category
 #' 
 #'
 #' 
-#' @param df a data frame with object_annotation_category
+#' @param df a data frame with annotation_category
 #' 
 #' @noRd
 find_multiple <- function(df){
@@ -103,7 +103,7 @@ multi_manager <-  function(path = NULL, morpho_include = T){
   outDf <- ogDf
   
   known <- unique(ogDf$taxo_name) #get the known names to cross ref
-  if(is.null(known)){stop("no 'object_annotation_category' column")} #format check
+  if(is.null(known)){stop("no 'annotation_category' column")} #format check
   
   if(morpho_include == T){
     outDf$morpho_include = rep(T, nrow(outDf))
@@ -165,7 +165,7 @@ multi_manager <-  function(path = NULL, morpho_include = T){
   if(morpho_include == T){
     multi_names$morpho_include <- F
   }
-  multi_names$object_annotation_status <- "multi_manager"
+  multi_names$annotation_status <- "multi_manager"
   outDf <- outDf[-index,] #remove the original rows
   retDf <- rbind(outDf,multi_names)
   return(retDf)
