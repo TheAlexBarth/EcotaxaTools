@@ -4,24 +4,14 @@
 \alias{ecopart_vol_bin}
 \title{ecopart_vol_bin - get binned volumes from ecopart volume output}
 \usage{
-ecopart_vol_bin(
-  df,
-  method,
-  custom_range = NULL,
-  equal_step = 10,
-  equal_number = 100
-)
+ecopart_vol_bin(df, method, custom_range)
 }
 \arguments{
 \item{df}{a data frame to enter}
 
 \item{method}{"Equal Space", "Custom", "Equal Number"}
 
-\item{custom_range}{vector of ranges}
-
-\item{equal_step}{create equal steps of this size}
-
-\item{equal_number}{create this number of ranges}
+\item{custom_range}{limits for depth bins}
 }
 \description{
 ecopart_vol_bin - get binned volumes from ecopart volume output

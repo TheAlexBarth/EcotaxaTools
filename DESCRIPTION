@@ -13,4 +13,7 @@ RoxygenNote: 7.1.2
 Imports:
     ecotaxar,
     utils,
-    svDialogs
+    svDialogs,
+    tidyr,
+    tibble,
+    readr

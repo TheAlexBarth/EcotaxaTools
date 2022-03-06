@@ -36,15 +36,15 @@ order_bins <- function(rdf) {
 #' @export 
 bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
                    equal_number = 100){
-
+  
   if(method == "Zooscan"){
     return(df$sample_id) #return column name for depth breaks
   } else if (method %in% c("Equal Number","Custom")){
     depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
     break_vect <- switch(method, "Custom" = check_custom(custom_range,
-                                                         max(df[,depthcol])),
+                                                         max(df[[depthcol]])),
                          "Equal Number" = equal_number)
-    return(cut(df[,depthcol], breaks = break_vect)) #cut into character vector
+    return(cut(df[[depthcol]], breaks = break_vect)) #cut into character vector
   } else if (method == "Equal Space"){
     depthcol <- get_col_name(df,"depth_offset") #get the column for UVP
     bins <- seq(0,max(df[,depthcol])+equal_step,equal_step)#set up bin sequence
@@ -55,6 +55,7 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
          'Custom', or 'Equal Space'.")
   }
 }
+
 
 #' bin_by_df - returns a data frame for counts by bin
 #' 
@@ -69,7 +70,7 @@ bin_by <- function(df, method, custom_range = NULL, equal_step = 10,
 #' @export
 bin_by_df <- function(df, method, custom_range, equal_step = 10,
                       equal_number = 100){
-  
+  warning('bin_by_df has been replaced by bin_taxa()')
   df = as.data.frame(df) #why do tibbles exist?!?
   cat_col <- get_col_name(df,"taxo_name")
   df[,cat_col] = as.factor(df[,cat_col]) #set to factor so not lost in split
@@ -119,47 +120,72 @@ bin_by_df <- function(df, method, custom_range, equal_step = 10,
 #' 
 #' @param df a data frame to enter
 #' @param method "Equal Space", "Custom", "Equal Number"
-#' 
-#' @param custom_range vector of ranges
-#' @param equal_step create equal steps of this size
-#' @param equal_number create this number of ranges
+#' @param custom_range limits for depth bins
 #' 
 #' @importFrom stats aggregate
 #' 
 #' @export
-ecopart_vol_bin <- function(df,method,custom_range = NULL,
-                            equal_step = 10, equal_number = 100) {
+ecopart_vol_bin <- function(df,method,custom_range) {
   
   #check that df is correct format
   if(!identical(names(df), c("depth", "vol_sampled"))) {
     stop('Input data frame must be in two-column layout with depth, vol_sampled')
   }
-  
-  #check methods arguement
-  if(!method %in% c("Equal Number",'Equal Space',"Custom")) {
-    stop('Method argument must be either "Equal Number","Equal Space", or "Custom"')
-  }
-  
-  #run for custom method and equal number
-  if(method %in% c('Custom','Equal Number')) {
     
-    #check custom range looks good
-    if(!all(sapply(custom_range, is.numeric))) {
-      stop('Custom method requires an input break vector of numeric type')
-    }
+    break_vect <- check_custom(custom_range, max(df$depth))
     
-    break_vect <- switch(method,
-                         'Custom' = check_custom(custom_range,
-                                                 max(df$depth)),
-                         'Equal Number' = equal_number)
     bins <- cut(df$depth, breaks = break_vect)
-    
-  } else if(method == 'Equal Space') {
-    bin_range <- seq(0,max(df$depth),equal_step) # make a range 0-max df depth by bin size
-    bins <- sapply(df$depth, nearest, bin_range) # make bins
-  }
   
   out_df <- aggregate(df$vol_sampled,by = list(db = bins),FUN = sum)
   names(out_df) <- c('db','vol_sampled')
   return(out_df)
 }
+
+#' bin_taxa() - a modern rendition of bin_by_df
+#' This version allows for summing over some factor like dry mass or volume
+#' 
+#' It will sum for each individual in a depth bin by taxa
+#' 
+#' @importFrom tidyr pivot_wider
+#' 
+#' @param df a data frame should have a taxo_name, name, or object_annotation_category column
+#' @param custom_range the limits of what bins should be made
+#' @param zooscan if the df is a zooscan export set to true, default false
+#' @param apply_func bin_taxa will apply function to a specified column if set to true
+#' @param func_col a single character vector of the value to apply function to; esd, biomass, drymass, etc
+#' @param func the function to apply
+#' 
+#' @export
+#' @author Alex Barth
+bin_taxa <- function(df,custom_range,zooscan = F,
+                     apply_func = F, func_col,func) {
+  cat_col <- get_col_name(df,'taxo_name')
+  
+  #this is old because bin_by requires method
+  # Later this could be updated, to only call bin_by for zooscan == F
+  if(zooscan == F) {
+    method <-  "Custom"
+  } else if(zooscan == T) {
+    method <- 'Zooscan'
+  }
+  
+  depth_bins <- bin_by(df,method = method, custom_range = custom_range)
+  unique_bins <- unique(depth_bins)
+  
+  #assign function column and function
+  if(apply_func == F) {
+    func_col <- cat_col
+    func <- length
+  }
+  
+  agg_df <- aggregate(df[[func_col]], by = list(db = depth_bins,
+                                                taxa = df[[cat_col]]),
+                      FUN = func)
+  rdf <- pivot_wider(agg_df, names_from = taxa, values_from = x)
+  rdf[is.na(rdf)] <- 0
+  if(zooscan == F) {
+    rdf <- order_bins(rdf)
+  }
+  return(rdf)
+}
+
