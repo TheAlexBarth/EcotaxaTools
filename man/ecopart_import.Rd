@@ -12,7 +12,7 @@ ecopart_import(dat_path)
 \description{
 This function requires a path to a folder with the raw output from ecopart
 and is primarily designed for UVP export objects. It will return a list of lists
-each list holds tibbles for each cast in a project for: particle, plankton, and volume
+each list holds tibbles for each cast in a project for: particle, plankton, volume, meta
 }
 \author{
 Alex Barth

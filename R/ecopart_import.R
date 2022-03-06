@@ -2,7 +2,7 @@
 #' 
 #' This function requires a path to a folder with the raw output from ecopart
 #' and is primarily designed for UVP export objects. It will return a list of lists
-#' each list holds tibbles for each cast in a project for: particle, plankton, and volume
+#' each list holds tibbles for each cast in a project for: particle, plankton, volume, meta
 #' 
 #' @importFrom readr read_tsv
 #' 
@@ -51,5 +51,6 @@ ecopart_import <- function(dat_path){
                                          perl = T))
   return(list(vol_files = ecopar_vol,
               par_files = par_files,
-              zoo_files = zoo_files))
+              zoo_files = zoo_files,
+              meta = par_meta))
 }

@@ -49,5 +49,39 @@ get_col_name <- function(df, goal_name = NULL,possible = NULL){
   return(index)
 }
 
+#' formatting plugs into timeOfDay
+#'
+#' @param time a vector
+getTime <- function(time) {
+  return(as.POSIXct(strftime(time,format = "%H:%M:%S", tz = "UTC"),
+                    format = "%H:%M:%S", tz = "UTC"))
+}
+
+#' Calculate the time of day as day, twilight, buffer
+#' 
+#' @param time a character vector of times (formatted to be from parmeta)
+#' @param sunrise in UVP timezone (typically UTC)
+#' @param sunset sunset
+#' @param buffer range around sunset/sunrise to assign as twilight in hours
+#' 
+#' @export
+#' @author Alex Barth
+timeOfDay <- function(time,sunrise,sunset,buffer) {
+  adjTime <- getTime(time)
+  hour_buffer <- buffer * 60 * 60
+  dawnStart <- as.POSIXct(sunrise,format = '%H:%M:%S',tz = "UTC") - hour_buffer
+  dawnEnd <- as.POSIXct(sunrise,format = '%H:%M:%S',tz = "UTC") + hour_buffer
+  duskStart <- as.POSIXct(sunset, format = '%H:%M:%S',tz = "UTC") -hour_buffer
+  duskEnd <- as.POSIXct(sunset, format = '%H:%M:%S',tz = "UTC") +hour_buffer
+  
+  if( adjTime > dawnEnd & adjTime < duskStart) {
+    return('day')
+  } else if ((adjTime > dawnStart & adjTime < dawnEnd) |
+             (adjTime > duskStart & adjTime < duskEnd)) {
+    return('twilight')
+  } else {
+    return('night')
+  }
+}
 
 
