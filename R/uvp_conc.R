@@ -79,8 +79,6 @@ sum_casts <- function(cast_names, zoo_list, vol_list,custom_range,...) {
   zoo_df <- do.call(rbind,zoo_list[which(names(zoo_list) %in% cast_names)])
   vol_df <- do.call(rbind,vol_list[which(names(vol_list) %in% cast_names)])
   
-  counts <- bin_by_df(zoo_df, method = "Custom",
-                      custom_range = custom_range)
   counts <- bin_taxa(zoo_df, custom_range, ...)
   vol_sum <- ecopart_vol_bin(vol_df, method = "Custom",
                              custom_range = custom_range)
