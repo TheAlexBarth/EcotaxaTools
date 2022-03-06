@@ -21,7 +21,7 @@ bin_format_check <- function(input) {
 #' @param df a bin_by_df product
 #' @param ref_range the reference range of data
 add_zero_rows <- function(df,ref_range) {
-
+  
   db <- as.character(df$db)
   if(!is_tibble(df)) { stop('FUCK - add zero rows in bin_formatting folder requires input df to be a tibble')}
   # a supery hacky fix to accomadate vol_df
@@ -48,7 +48,7 @@ add_zero_rows <- function(df,ref_range) {
   out_df <- rbind.data.frame(df,add_df)
   
   #order out_df by ref_range
-  out_df <- out_df[match(out_df$db,ref_bins),]
+  out_df <- out_df[match(ref_bins,as.character(out_df$db)),]
   return(out_df)
 }
 

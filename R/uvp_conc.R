@@ -77,9 +77,10 @@ sum_casts <- function(cast_names, zoo_list, vol_list,custom_range,...) {
   zoo_df <- do.call(rbind,zoo_list[which(names(zoo_list) %in% cast_names)])
   vol_df <- do.call(rbind,vol_list[which(names(vol_list) %in% cast_names)])
   
-  counts <- bin_taxa(zoo_df, custom_range, ...)
+  counts <- bin_taxa(zoo_df, custom_range, apply_func = T, func_col = 'dry_mass',func = sum)
   vol_sum <- ecopart_vol_bin(vol_df, method = "Custom",
                              custom_range = custom_range)
+  
   
   #adjust for fully empty count rows
   if(nrow(counts) != nrow(vol_sum)) {
@@ -87,11 +88,11 @@ sum_casts <- function(cast_names, zoo_list, vol_list,custom_range,...) {
       stop('All methods asides from custom depreciated')
     }
     counts <- add_zero_rows(counts,custom_range) #add zero to count rows
-    if(length(vol_df$db) < length(counts$db)) {
-      vol_df <- add_zero_rows(vol_df,custom_range)
+    if(length(vol_sum$db) < length(counts$db)) {
+      vol_sum <- add_zero_rows(vol_sum,custom_range)
     }
     
-    if(!identical(counts$db,vol_df$db)) {
+    if(!identical(counts$db,vol_sum$db)) {
       stop('depth bins do not match, something wrong this functions')
     }
   }
