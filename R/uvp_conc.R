@@ -20,8 +20,6 @@
 uvp_conc <- function(cast_names, zoo_list, vol_list,
                      custom_range,...) {
   
-  require(EcotaxaTools) #load in package
-  
   if(!all(cast_names %in% names(zoo_list))){stop('Error in cast names')}
   
   conc_list <- vector('list',length(cast_names)) #set up shell

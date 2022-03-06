@@ -48,7 +48,7 @@ add_zero_rows <- function(df,ref_range) {
   out_df <- rbind.data.frame(df,add_df)
   
   #order out_df by ref_range
-  out_df <- out_df[order(out_df$db,ref_bins),]
+  out_df <- out_df[match(out_df$db,ref_bins),]
   return(out_df)
 }
 
