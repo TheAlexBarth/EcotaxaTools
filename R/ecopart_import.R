@@ -15,8 +15,9 @@ ecopart_import <- function(dat_path){
   dct <- dir(dat_path) #get directory list
   par_fnames <- dct[grep("_PAR_",dct)] #get names of par files
   zoo_fnames <- dct[grep("_ZOO_",dct)] #get names of the zooplankton files
-  par_meta <- invisible(read_tsv(paste(dat_path,dct[grep("_metadata_",dct)],
-                                       sep = "/")))
+  par_meta <- read_tsv(paste(dat_path,dct[grep("_metadata_",dct)],
+                             sep = "/"), 
+                       col_types = cols())
   
   
   #set up storage for list-read-ins
@@ -25,10 +26,12 @@ ecopart_import <- function(dat_path){
   names(par_files) <- par_fnames
   names(zoo_files) <- zoo_fnames
   for(i in 1:length(par_files)){
-    par_files[[i]] <- invisible(read_tsv(paste(dat_path,par_fnames[i],
-                                               sep = "/")))
-    zoo_files[[i]] <- invisible(read_tsv(paste(dat_path,zoo_fnames[i],
-                                     sep = "/")))
+    par_files[[i]] <- read_tsv(paste(dat_path,par_fnames[i],
+                                     sep = "/"),
+                               col_types = cols())
+    zoo_files[[i]] <- read_tsv(paste(dat_path,zoo_fnames[i],
+                                     sep = "/"),
+                               col_types = cols())
     zoo_files[[i]]$pixel_mm <- 0.088;
   }
   ecopar_vol <- vector(mode = "list",length(par_files)) #storage
