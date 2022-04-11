@@ -2,28 +2,25 @@
 % Please edit documentation in R/uvp_conc.R
 \name{uvp_conc}
 \alias{uvp_conc}
-\title{Calculate UVP Concentration}
+\title{Calculate UVP Concentration from Ecopart Object}
 \usage{
-uvp_conc(cast_names, zoo_list, vol_list, custom_range, ...)
+uvp_conc(ecopart_obj, cast_name, depth_breaks, ...)
 }
 \arguments{
-\item{cast_names}{a character vector of cast names to loop over}
+\item{ecopart_obj}{an ecopart object list}
 
-\item{zoo_list}{list of ecopart zooplankton data}
+\item{cast_name}{name of the cast to get concentration of}
 
-\item{vol_list}{list of volume ecopart data}
+\item{depth_breaks}{a vector of depth break ranges}
 
-\item{custom_range}{range of vectors to break into bins}
-
-\item{...}{arguments to pass to \code{bin_taxa}}
+\item{...}{pass to \code{bin_taxa()} for func and func_col}
 }
 \description{
-This script takes the UVP data and calculates densities
-it requries output from raw ecopart export for both taxa and volume
-These files are automatically imported by the ecopart_import
-}
-\details{
-Eventually I will need to update this function since i don't want looping inside functions
+This function can take in an ecopart object (from ecopart_import)
+And for a given cast name, it will return the concentration.
+Relies on default formatting and will return count concentration by default
+However, you can use func_col and func arguements to pass to bin_taxa
+if trying to get biomass/biovolume concentration.
 }
 \author{
 Alex Barth

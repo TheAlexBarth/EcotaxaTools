@@ -4,7 +4,7 @@
 #' and is primarily designed for UVP export objects. It will return a list of lists
 #' each list holds tibbles for each cast in a project for: particle, plankton, volume, meta
 #' 
-#' @importFrom readr read_tsv
+#' @importFrom readr read_tsv cols
 #' 
 #' @param dat_path the path in your compute to the file
 #' 
@@ -34,26 +34,15 @@ ecopart_import <- function(dat_path){
                                col_types = cols())
     zoo_files[[i]]$pixel_mm <- 0.088;
   }
-  ecopar_vol <- vector(mode = "list",length(par_files)) #storage
-  for(i in 1:length(par_files)){
-    ecopar_vol[[i]] <- unique(par_files[[i]][,c(1,2)]) #get the depth and imgcount
-    ecopar_vol[[i]][,2] <- ecopar_vol[[i]][,2] * par_meta$acq_volimage #multiple by image size
-    names(ecopar_vol[[i]])[2] <- "vol_sampled" #name it
-  }
-  names(ecopar_vol) <- names(par_files)
   
   #format to have cast names
-  names(ecopar_vol) <- regmatches(names(ecopar_vol),
-                                  regexpr("(?<=_).*?(?=_)",names(ecopar_vol),
-                                          perl = T))
   names(par_files) <- regmatches(names(par_files),
                                  regexpr("(?<=_).*?(?=_)",names(par_files),
                                          perl = T))
   names(zoo_files) <- regmatches(names(zoo_files),
                                  regexpr("(?<=_).*?(?=_)",names(zoo_files),
                                          perl = T))
-  return(list(vol_files = ecopar_vol,
-              par_files = par_files,
+  return(list(par_files = par_files,
               zoo_files = zoo_files,
               meta = par_meta))
 }
