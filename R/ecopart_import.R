@@ -37,10 +37,12 @@ ecopart_import <- function(dat_path){
   
   #format to have cast names
   names(par_files) <- regmatches(names(par_files),
-                                 regexpr("(?<=_).*?(?=_)",names(par_files),
+                                 regexpr("(?<=[0-9]_).*?(?=_PAR)",
+                                         names(par_files),
                                          perl = T))
   names(zoo_files) <- regmatches(names(zoo_files),
-                                 regexpr("(?<=_).*?(?=_)",names(zoo_files),
+                                 regexpr("(?<=[0-9]_).*?(?=_ZOO)",
+                                         names(zoo_files),
                                          perl = T))
   return(list(par_files = par_files,
               zoo_files = zoo_files,
