@@ -45,7 +45,7 @@ ecopart_import <- function(dat_path){
                                          names(zoo_files),
                                          perl = T))
   
-  if(names(par_files) != names(zoo_files)) {
+  if(any(names(par_files) != names(zoo_files))) {
     warning("The par_files and zoo_files don\'t exactly match")
   }
   return(list(par_files = par_files,
