@@ -44,6 +44,10 @@ ecopart_import <- function(dat_path){
                                  regexpr("(?<=[0-9]_).*?(?=_ZOO)",
                                          names(zoo_files),
                                          perl = T))
+  
+  if(names(par_files) != names(zoo_files)) {
+    warning("The par_files and zoo_files don\'t exactly match")
+  }
   return(list(par_files = par_files,
               zoo_files = zoo_files,
               meta = par_meta))
