@@ -20,6 +20,7 @@ If there are any issues, contact Alex Barth abarth1014@gmail.com
  - add_zoo.R: A function to add a column with function to all zoo_files in an ecopart object list
  - import.R: Importing ecopart files from a directory
  - vol_bin.R: get volume in bins from UVP data ***NEED TO UPDATE***
+ - merge_casts.R: Merge casts based on some grouping of cast names
 
 ### gen: files generalizable to any tools
  - bin-helpers.R: functions for helping deal with bin_taxa data
@@ -29,6 +30,7 @@ If there are any issues, contact Alex Barth abarth1014@gmail.com
  - obj-volume.R: Get the volume of objects in an ecotaxa-style tibble. Two options sph_vol(); ellps_vol()
  - read-etx.R: import ecotaxa .tsv files
  - rename.R: a creative way to rename taxa
+ - rel-taxa.R: Get the relative abundance of different named taxa
 
 ### UVP: files for dealing with UVP-specific data
  - conc.R: get concentration of a given cast ***NEED TO UPDATE FOR Name Col Selector***

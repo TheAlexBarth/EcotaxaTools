@@ -15,5 +15,5 @@ get_col_name(df, goal_name = NULL, possible = NULL)
 }
 \description{
 A function to choose which column to use
-This is a hacky fix to the issue that column names switch
+This is a hacky fix to the issue that column names switch for different instruments
 }

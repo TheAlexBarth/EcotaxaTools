@@ -64,7 +64,7 @@ timeOfDay <- function(time,sunrise,sunset,buffer) {
 #' get_col_name
 #' 
 #' A function to choose which column to use
-#' This is a hacky fix to the issue that column names switch 
+#' This is a hacky fix to the issue that column names switch for different instruments
 #' 
 #' @param df the data frame, exported from ecopart or ecotaxa
 #' @param goal_name 'taxo_name', 'depth_offset', or 'taxo_hierarchy
