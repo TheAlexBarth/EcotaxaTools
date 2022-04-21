@@ -77,7 +77,8 @@ get_col_name <- function(df, goal_name = NULL,possible = NULL){
                        "taxo_name" = c("object_annotation_category",
                                        "name", "taxo_name"),
                        "depth_offset" = c("depth_including_offset",
-                                          "depth_offset"),
+                                          "depth_offset",
+                                          'depth'),
                        'taxo_hierarchy'= c('taxo_hierarchy',
                                            'object_taxo_hierarchy'),
                        stop("goal_name not in pre-selected options - see source code"))
