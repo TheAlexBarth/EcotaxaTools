@@ -69,6 +69,8 @@ timeOfDay <- function(time,sunrise,sunset,buffer) {
 #' @param df the data frame, exported from ecopart or ecotaxa
 #' @param goal_name 'taxo_name', 'depth_offset', or 'taxo_hierarchy
 #' @param possible possible column names
+#' 
+#' @export
 get_col_name <- function(df, goal_name = NULL,possible = NULL){
   if(is.null(possible)){
     possible <- switch(goal_name,
