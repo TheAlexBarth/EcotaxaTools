@@ -49,3 +49,20 @@ names_to <- function(df, new_names, suppress_print = F) {
   }
   return(change_name)
 }
+
+#' Drop certain names from the ecotaxa dataframe
+#' 
+#' This is a modifier which will remove rows which contain matching function values
+#' 
+#' @param df an ecotaxa-tsv style data frame
+#' @param drop_names character vector of which names to drop
+#' 
+#' @export
+#' 
+#' @author Alex Barth
+names_drop <- function(df, drop_names) {
+  name_col <- get_col_name(df, 'taxo_name')
+  drop_rows <- which(df[[name_col]] %in% drop_names)
+  rdf <- df[-drop_rows,]
+  return(rdf)
+}

@@ -4,10 +4,10 @@
 \alias{add_zoo}
 \title{Add column to all zooplankton files}
 \usage{
-add_zoo(ecopart_obj, func, col_name, ...)
+add_zoo(zoo_list, func, col_name, ...)
 }
 \arguments{
-\item{ecopart_obj}{an ecopart object list}
+\item{zoo_list}{an ecopart object list or list of ecotaxa-tsv (zoo_files)}
 
 \item{func}{function to apply (must take df and return vector) see ellps_vol}
 
@@ -16,8 +16,8 @@ add_zoo(ecopart_obj, func, col_name, ...)
 \item{...}{to pass to \code{lapply()} if needed}
 }
 \description{
-This function will add a column to all zooplankton files in an ecopart_object
-It returns a new ecopart object
+This function will add a column to all zooplankton files in either an ecopart-object
+or just a list of ecotaxa_tsvs
 }
 \author{
 Alex Barth
