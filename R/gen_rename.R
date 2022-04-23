@@ -66,3 +66,21 @@ names_drop <- function(df, drop_names) {
   rdf <- df[-drop_rows,]
   return(rdf)
 }
+
+#' Keep only names from the ecotaxa dataframe
+#' 
+#' This is a modifier which will remove rows that don't contain values provided
+#' An alternavite is names_drop
+#' 
+#' @param df an ecotaxa-tsv style data frame
+#' @param keep_names character vector of which names to drop
+#' 
+#' @export
+#' 
+#' @author Alex Barth
+names_keep <- function(df, keep_names) {
+  name_col <- get_col_name(df, 'taxo_name')
+  drop_rows <- which(!(df[[name_col]] %in% keep_names))
+  rdf <- df[-drop_rows,]
+  return(rdf)
+}
