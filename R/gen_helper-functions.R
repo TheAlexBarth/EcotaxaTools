@@ -88,5 +88,3 @@ get_col_name <- function(df, goal_name = NULL,possible = NULL){
   if(length(index) != 1){stop("More than one column name in possible set")}
   return(index)
 }
-
-
