@@ -22,13 +22,13 @@ bin_taxa <- function(df,depth_breaks,zooscan = F,
   if(func_col == 'taxo_name') {
     func_col <- get_col_name(df,'taxo_name')
   }
-  depth_col <- get_col_name(df, 'depth_offset')
-    
 
   #establish points to break on
   if(zooscan == T) {
-    depth_bins <- df$sample_id
+    depth_bins <- df$sample_id #this needs to be improved in the future
   } else {
+    depth_col <- get_col_name(df, 'depth_offset')
+
     depth_bins <- cut(df[[depth_col]], 
                       breaks = check_custom(depth_breaks, max(df[[depth_col]])))
   }
