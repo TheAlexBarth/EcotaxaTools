@@ -49,3 +49,38 @@ trapz_integarate <- function(x,y,min_x,max_x,...) {
   return(auc)
 }
 
+
+#' Match df to integrate
+#' 
+#' Interior function will match up a data frame for integration
+#' 
+#' @param df the input data frame
+#' @param ... arguments to pass to integrate
+integration_matcher <- function(df,...) {
+  out <- trapz_integarate(x = df$mp, y = df$conc_m3,
+                          min_x = min(df$min_d), max_x = max(df$max_d),...)
+  return(out)
+}
+
+
+#' Integrate all taxa in a group
+#' 
+#' Apply trapz integrate to a list of data frames
+#' 
+#' @param df input data frame
+#' @param need_format logical input to determine if needed to format 
+#' 
+#' @export
+integrate_all <- function(df, need_format = F, ...){
+  if(need_format) {
+    info_cols <- get_bin_limtis(df$db)
+    df$min_d <- info_cols$min_d
+    df$max_d <- info_cols$max_d
+    df$mp <- info_cols$mp
+  }
+  bin_list <- split(df, f = df$taxa)
+  
+  intg_list <- lapply(bin_list, integration_matcher, ...)
+  class(intg_list) <- 'etx_depth_integration_list'
+  return(intg_list)
+}
