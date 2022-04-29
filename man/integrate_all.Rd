@@ -10,6 +10,8 @@ integrate_all(df, need_format = F, ...)
 \item{df}{input data frame}
 
 \item{need_format}{logical input to determine if needed to format}
+
+\item{...}{arguements to pass to integrate()}
 }
 \description{
 Apply trapz integrate to a list of data frames

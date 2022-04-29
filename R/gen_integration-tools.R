@@ -68,7 +68,8 @@ integration_matcher <- function(df,...) {
 #' Apply trapz integrate to a list of data frames
 #' 
 #' @param df input data frame
-#' @param need_format logical input to determine if needed to format 
+#' @param need_format logical input to determine if needed to format
+#' @param ... arguements to pass to integrate()
 #' 
 #' @export
 integrate_all <- function(df, need_format = F, ...){
@@ -81,6 +82,28 @@ integrate_all <- function(df, need_format = F, ...){
   bin_list <- split(df, f = df$taxa)
   
   intg_list <- lapply(bin_list, integration_matcher, ...)
-  class(intg_list) <- 'etx_depth_integration_list'
+  class(intg_list) <- c('etx_integration_list', 'list')
   return(intg_list)
+}
+
+
+#' Switch integration list to a dataframe
+#' 
+#' This takes an etx_depth_integration_list and will return a dataframe
+#' 
+#' @param intg_list the integration list
+#' 
+#' @importFrom tidyr pivot_longer
+#' @importFrom tibble tibble
+#' 
+#' @export
+#' @author Alex Barth
+intg_to_tib <- function(intg_list) {
+  stopifnot(any(class(intg_list) == 'etx_integration_list'))
+  # set up the dataframe
+  ret_tib <- tibble(taxa = names(intg_list),
+                 intg = rep(NA, length(names(intg_list))))
+  
+  ret_tib$intg <- sapply(intg_list, `[[`, 'value') # get the value from integration
+  return(ret_tib)
 }
