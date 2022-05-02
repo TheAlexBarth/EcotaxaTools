@@ -1,6 +1,6 @@
 # EcotaxaTools
 A variety of tools to process and quickly analyze data from Ecotaxa & Ecopart
-This package is under heavy development. For a tutorial on it's use check out [my tutorial](TheAlexBarth.Github.io/Ecotaxa_Tools_Tutorial.html)
+This package is under heavy development. For a tutorial on it's use check out [my tutorial](https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/)
 For updates to the package check out the [updates page](https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/info_updates-page.html)
 
 If there are any issues, contact Alex Barth abarth1014@gmail.com
