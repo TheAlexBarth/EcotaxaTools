@@ -13,3 +13,6 @@ bin_format(df)
 Takes a concentration object and will format the bins
 to have min_d, max_d, and mp (mid_point)
 }
+\author{
+Alex Barth
+}

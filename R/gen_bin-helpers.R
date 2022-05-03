@@ -82,6 +82,9 @@ get_bin_limtis <- function(input) {
 #' to have min_d, max_d, and mp (mid_point)
 #' 
 #' @param df a dataframe which is an etx_conc_obj instance
+#' 
+#' @export
+#' @author Alex Barth
 bin_format <- function(df) {
   stopifnot(any(class(df) == 'etx_conc_obj'))
   info_cols <- get_bin_limtis(df$db)
