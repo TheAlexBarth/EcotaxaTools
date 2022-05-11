@@ -52,7 +52,7 @@ uvp_conc <- function(ecopart_obj, cast_name, depth_breaks, ...) {
   
   # calculate abundance of all zooplankton groups
   counts <- bin_taxa(ecopart_obj$zoo_files[[cast_name]],
-                     depth_breaks = depth_breaks, ...)
+                     depth_breaks = depth_breaks, force_bins = T, ...)
   
   # get matching volume bins
   vol_df <- as_tibble(ecopart_vol_bin(get_ecopart_vol(ecopart_obj)[[cast_name]],

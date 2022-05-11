@@ -5,7 +5,14 @@
 \title{bin_taxa() - a modern rendition of bin_by_df
 This version allows for summing over some factor like dry mass or volume}
 \usage{
-bin_taxa(df, depth_breaks, zooscan = F, func_col = "taxo_name", func = length)
+bin_taxa(
+  df,
+  depth_breaks,
+  zooscan = F,
+  func_col = "taxo_name",
+  func = length,
+  force_bins = F
+)
 }
 \arguments{
 \item{df}{a data frame should have a taxo_name, name, or object_annotation_category column}
@@ -17,6 +24,8 @@ bin_taxa(df, depth_breaks, zooscan = F, func_col = "taxo_name", func = length)
 \item{func_col}{a single character vector of the value to apply function to; esd, biomass, drymass, etc}
 
 \item{func}{the function to apply}
+
+\item{force_bins}{set to true if you want to ensure observations for all 0's}
 }
 \description{
 It will sum for each individual in a depth bin by taxa

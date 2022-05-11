@@ -1,3 +1,32 @@
+#' Inside function for force bins option
+#' 
+#' @param tdf the split dataframe
+#' @param taxa_names all possible taxa names
+add_count_zeros <- function(tdf, taxa_names){
+  if(all(taxa_names %in% tdf$taxa)) {
+    return(tdf)
+  } else {
+    add_taxa <- taxa_names[which(!(taxa_names %in% tdf$taxa))]
+    rdf <- data.frame(taxa = c(tdf$taxa, add_taxa),
+                      x = c(tdf$x, rep(0,length(add_taxa))))
+    return(rdf)
+  }
+}
+
+#' Force bins will add zeros to bins that don't have any observations
+#' 
+#' This function should be used with consideration. It is necessary for the UVP
+#' because zoo files are blind as to where the UVP did actually collect an image
+#' 
+#' @param counts the count vector
+force_bins_switch <- function(counts, bins = levels(counts$db)) {
+  count_bins <- suppressWarnings(split(counts[,2:3],f = as.character(bins)))
+  adj_counts <- lapply(count_bins, add_count_zeros, unique(counts$taxa))
+  ret_counts <- list_to_tib(adj_counts, 'db')
+  ret_counts <- order_bins(ret_counts[,c(3,1,2)])
+  return(ret_counts)
+}
+
 #' bin_taxa() - a modern rendition of bin_by_df
 #' This version allows for summing over some factor like dry mass or volume
 #' 
@@ -10,11 +39,13 @@
 #' @param zooscan if the df is a zooscan export set to true, default false
 #' @param func_col a single character vector of the value to apply function to; esd, biomass, drymass, etc
 #' @param func the function to apply
+#' @param force_bins set to true if you want to ensure observations for all 0's
 #' 
 #' @export
 #' @author Alex Barth
 bin_taxa <- function(df,depth_breaks,zooscan = F,
-                    func_col = 'taxo_name',func = length) {
+                    func_col = 'taxo_name',func = length,
+                    force_bins = F) {
   
   cat_col <- get_col_name(df, 'taxo_name')
   
@@ -42,6 +73,10 @@ bin_taxa <- function(df,depth_breaks,zooscan = F,
   agg_df[is.na(agg_df)] <- 0
   if(zooscan == F) {
     agg_df <- order_bins(agg_df)
+  }
+  if(force_bins == T) {
+    rdf <- force_bins_switch(agg_df, levels(agg_df$db))
+    return(rdf)
   }
   return(agg_df)
 }
