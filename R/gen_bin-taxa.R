@@ -20,7 +20,7 @@ add_count_zeros <- function(tdf, taxa_names){
 #' 
 #' @param counts the count vector
 force_bins_switch <- function(counts) {
-  count_bins <- split(counts[,2:3])
+  count_bins <- split(counts[,2:3], f=counts$db)
   adj_counts <- lapply(count_bins, add_count_zeros, unique(counts$taxa))
   ret_counts <- list_to_tib(adj_counts, 'db')
   ret_counts <- order_bins(ret_counts[,c(3,1,2)])
