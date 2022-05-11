@@ -4,7 +4,7 @@
 \alias{force_bins_switch}
 \title{Force bins will add zeros to bins that don't have any observations}
 \usage{
-force_bins_switch(counts, bins = levels(counts$db))
+force_bins_switch(counts)
 }
 \arguments{
 \item{counts}{the count vector}

@@ -19,8 +19,8 @@ add_count_zeros <- function(tdf, taxa_names){
 #' because zoo files are blind as to where the UVP did actually collect an image
 #' 
 #' @param counts the count vector
-force_bins_switch <- function(counts, bins = levels(counts$db)) {
-  count_bins <- suppressWarnings(split(counts[,2:3],f = as.character(bins)))
+force_bins_switch <- function(counts) {
+  count_bins <- split(counts[,2:3])
   adj_counts <- lapply(count_bins, add_count_zeros, unique(counts$taxa))
   ret_counts <- list_to_tib(adj_counts, 'db')
   ret_counts <- order_bins(ret_counts[,c(3,1,2)])
@@ -75,7 +75,7 @@ bin_taxa <- function(df,depth_breaks,zooscan = F,
     agg_df <- order_bins(agg_df)
   }
   if(force_bins == T) {
-    rdf <- force_bins_switch(agg_df, levels(agg_df$db))
+    rdf <- force_bins_switch(agg_df)
     return(rdf)
   }
   return(agg_df)
