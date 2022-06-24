@@ -92,11 +92,13 @@ ecopart_import <- function(dat_path, trim_to_zoo = F){
     par_files[[i]] <- read_tsv(paste(dat_path,par_fnames[i],
                                      sep = "/"),
                                col_types = cols())
+    class(par_files[[i]]) <- c(class(par_files[[i]]), 'par_df')
   }
   for(i in 1:length(zoo_files)){
     zoo_files[[i]] <- read_tsv(paste(dat_path, zoo_fnames[i],
                                      sep = '/'),
                                col_types = cols())
+    class(zoo_files[[i]]) <- c(class(zoo_files[[i]]), 'zoo_df')
   }
   
   
@@ -112,14 +114,18 @@ ecopart_import <- function(dat_path, trim_to_zoo = F){
   
   # trim meta data to only have profiles which match
   # This step should only matter if you have trim_to_zoo true
-  
+  match_profid <- which(par_meta$profileid %in% names(zoo_files) |
+                          par_meta$profileid %in% names(par_files))
+  par_meta <- par_meta[match_profid,]
   
   if(any(names(par_files) != names(zoo_files))) {
     warning("The par_files and zoo_files don\'t exactly match")
   }
   #construct return structure
-  ret_ecpt <- structure(list(par_files = par_files,
-                             zoo_files = zoo_files,
+  ret_ecpt <- structure(list(par_files = structure(par_files,
+                                                   class = c('list', 'par_list')),
+                             zoo_files = structure(zoo_files,
+                                                   class = c('list', 'zoo_list')),
                              meta = par_meta),
                         class = c('list','ecopart_obj'))
     

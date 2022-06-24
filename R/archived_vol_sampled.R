@@ -13,6 +13,9 @@
 #' @export
 vol_sampled <- function(cast_name, path, method, custom_range, equal_step = 10,
                         equal_number = 100, depth_as_num = F){
+  warnging('Suggested to use Ecopart functions instead. 
+           See https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial.html')
+  
   dir_path <- paste(path,"work",cast_name,sep = "/") #set up path to the work folder
   dat_name <- paste(cast_name,"datfile.txt",sep = "_")
   meta_name <- paste(cast_name,"meta.txt",sep = "_")

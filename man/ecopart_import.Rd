@@ -2,12 +2,14 @@
 % Please edit documentation in R/ecopart_import.R
 \name{ecopart_import}
 \alias{ecopart_import}
-\title{reads in files from a folder of ecopart raw export}
+\title{Read in files from a folder of ecopart raw export}
 \usage{
-ecopart_import(dat_path)
+ecopart_import(dat_path, trim_to_zoo = F)
 }
 \arguments{
 \item{dat_path}{the path in your compute to the file}
+
+\item{trim_to_zoo}{option to trim profiles for those where zoops are available}
 }
 \description{
 This function requires a path to a folder with the raw output from ecopart

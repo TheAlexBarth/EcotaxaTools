@@ -2,7 +2,7 @@
 % Please edit documentation in R/gen_list-to-tib.R
 \name{list_to_tib}
 \alias{list_to_tib}
-\title{Make a tibble from a list - with names as a new colume}
+\title{Make a tibble from a list - with names as a new column}
 \usage{
 list_to_tib(list, new_col_name = "group")
 }

@@ -4,7 +4,7 @@
 \alias{timeOfDay}
 \title{Calculate the time of day as day, twilight, buffer}
 \usage{
-timeOfDay(time, sunrise, sunset, buffer)
+timeOfDay(time, sunrise, sunset, buffer, tz = "UTC")
 }
 \arguments{
 \item{time}{a character vector of times (formatted to be from parmeta)}
@@ -14,6 +14,8 @@ timeOfDay(time, sunrise, sunset, buffer)
 \item{sunset}{sunset}
 
 \item{buffer}{range around sunset/sunrise to assign as twilight in hours}
+
+\item{tz}{timezone}
 }
 \description{
 Calculate the time of day as day, twilight, buffer

@@ -4,12 +4,14 @@
 \alias{names_drop}
 \title{Drop certain names from the ecotaxa dataframe}
 \usage{
-names_drop(df, drop_names)
+names_drop(df, drop_names, drop_children = F)
 }
 \arguments{
 \item{df}{an ecotaxa-tsv style data frame}
 
 \item{drop_names}{character vector of which names to drop}
+
+\item{drop_children}{option to drop taxonomic children}
 }
 \description{
 This is a modifier which will remove rows which contain matching function values

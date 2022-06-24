@@ -22,18 +22,19 @@ rel_abundance <- function(df) {
 #' @export
 #' @author Alex Barth
 rel_taxa <- function(ecodf) {
-  
-  #if it is a list or ecopart_obj
-  if(any(class(ecodf) == 'list')) {
-    #if it's an ecopart object, extract just the zoo_files
-    if(all(names(ecodf) %in% c('par_files', 'zoo_files', 'meta'))) {
-      ecodf <- ecodf$zoo_files
-    }
     
+  if(is.etx_class(ecodf, 'ecopart_obj')) {
+    ecodf <- ecodf$zoo_list
     rlist <- lapply(ecodf, rel_abundance)
     return(rlist)
+  } else if(is.etx_class(ecodf, 'zoo_list')) {
+    rlist <- lapply(ecodf, rel_abundance)
+    return(rlist)
+  } else if(is.etx_class(ecodf, 'zoo_df')) {
+    rdf <- rel_abundance(ecodf)
+  } else {
+    rdf <- rel_abundance(ecodf)
   }
-  
   rdf <- rel_abundance(ecodf)
   return(rdf)
   

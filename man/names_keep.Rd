@@ -4,12 +4,14 @@
 \alias{names_keep}
 \title{Keep only names from the ecotaxa dataframe}
 \usage{
-names_keep(df, keep_names)
+names_keep(df, keep_names, keep_children = F)
 }
 \arguments{
 \item{df}{an ecotaxa-tsv style data frame}
 
 \item{keep_names}{character vector of which names to drop}
+
+\item{keep_children}{option to keep children of drop names}
 }
 \description{
 This is a modifier which will remove rows that don't contain values provided

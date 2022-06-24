@@ -15,6 +15,6 @@ nearest(number, vector)
 A function to assign a numeric bin between a range
 }
 \examples{
-nearest(74.2,seq(0,100,5))
+nearest(74.2,seq(0,100,5)) #returns 75
 
 }

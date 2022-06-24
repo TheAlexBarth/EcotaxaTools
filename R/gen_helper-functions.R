@@ -18,7 +18,7 @@ add_range <- function(number,width){
 #' @param vector a numeric vector to match values to
 #' 
 #' @examples
-#' nearest(74.2,seq(0,100,5))
+#' nearest(74.2,seq(0,100,5)) #returns 75
 #' 
 #' @export
 nearest <- function(number,vector){
@@ -40,16 +40,17 @@ getTime <- function(time) {
 #' @param sunrise in UVP timezone (typically UTC)
 #' @param sunset sunset
 #' @param buffer range around sunset/sunrise to assign as twilight in hours
+#' @param tz timezone
 #' 
 #' @export
 #' @author Alex Barth
-timeOfDay <- function(time,sunrise,sunset,buffer) {
+timeOfDay <- function(time,sunrise,sunset,buffer, tz = "UTC") {
   adjTime <- getTime(time)
   hour_buffer <- buffer * 60 * 60
-  dawnStart <- as.POSIXct(sunrise,format = '%H:%M:%S',tz = "UTC") - hour_buffer
-  dawnEnd <- as.POSIXct(sunrise,format = '%H:%M:%S',tz = "UTC") + hour_buffer
-  duskStart <- as.POSIXct(sunset, format = '%H:%M:%S',tz = "UTC") -hour_buffer
-  duskEnd <- as.POSIXct(sunset, format = '%H:%M:%S',tz = "UTC") +hour_buffer
+  dawnStart <- as.POSIXct(sunrise,format = '%H:%M:%S',tz = tz) - hour_buffer
+  dawnEnd <- as.POSIXct(sunrise,format = '%H:%M:%S',tz = tz) + hour_buffer
+  duskStart <- as.POSIXct(sunset, format = '%H:%M:%S',tz = tz) -hour_buffer
+  duskEnd <- as.POSIXct(sunset, format = '%H:%M:%S',tz = tz) +hour_buffer
   
   if( adjTime > dawnEnd & adjTime < duskStart) {
     return('day')
@@ -87,4 +88,19 @@ get_col_name <- function(df, goal_name = NULL,possible = NULL){
   index <- which(names(df) %in% possible)
   if(length(index) != 1){stop("More than one column name in possible set")}
   return(index)
+}
+
+#' Any In
+#' 
+#' Simply a wrapper for %in% to check if there are any
+#' 
+#' @param checkVect the input vector
+#' @param refVect the reference vector
+#' @export
+any_in <- function(checkVect, refVect){
+  if(any(checkVect %in% refVect)) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
 }

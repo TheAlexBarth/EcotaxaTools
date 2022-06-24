@@ -1,4 +1,4 @@
-#' Make a tibble from a list - with names as a new colume
+#' Make a tibble from a list - with names as a new column
 #' 
 #' This function just calls rbind on a whole list but will first
 #' make a new column in the dataframe, corresponding to the names of the list

@@ -2,7 +2,7 @@
 % Please edit documentation in R/gen_bin-taxa.R
 \name{bin_taxa}
 \alias{bin_taxa}
-\title{bin_taxa() - a modern rendition of bin_by_df
+\title{Bin observations by taxa according to some common factor
 This version allows for summing over some factor like dry mass or volume}
 \usage{
 bin_taxa(

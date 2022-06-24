@@ -9,7 +9,7 @@ add_col(df, column, col_name)
 \arguments{
 \item{df}{a tsv ecotaxa dataframe}
 
-\item{column}{the colum to add}
+\item{column}{the column to add}
 
 \item{col_name}{the name to assign new column}
 }

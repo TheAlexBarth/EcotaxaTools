@@ -99,7 +99,7 @@ integrate_all <- function(df, need_format = F, ...){
 #' @export
 #' @author Alex Barth
 intg_to_tib <- function(intg_list) {
-  stopifnot(any(class(intg_list) == 'etx_integration_list'))
+  stopifnot(is.etx_class(intg_list, 'etx_integration_list'))
   # set up the dataframe
   ret_tib <- tibble(taxa = names(intg_list),
                  intg = rep(NA, length(names(intg_list))))

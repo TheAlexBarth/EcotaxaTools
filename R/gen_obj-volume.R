@@ -1,33 +1,76 @@
-#' ellps_vol - calculate volume of an ellipsoid shape
+#' Calculate the ellipsoid volume of a vignette
 #' 
-#' This function takes a data frame of ecotaxa output and returns a vector of ellipsoid shape
+#' Should give the raw input with pixels for the size values
 #' 
-#' Must have column headers formatted. This assumes you are using the pixels input
-#' it will return it in mm. If you converted to mm already - this doesn't work
-#' unless you renamed converted columns
-#' 
-#' @param df - the data frame to feed it
-#' 
+#' @param pixel_mm pixel to mm conversion
+#' @param major the major axis, can be a vector
+#' @param minor the minor axis, can be a vector
+#'
 #' @export
-ellps_vol  <-  function(df) {
-  major_mm <- df$major * df$pixel_mm;
-  minor_mm <- df$minor * df$pixel_mm;
+calc_ellps_vol  <-  function(major, minor, pixel_mm) {
+  major_mm <- major * pixel_mm;
+  minor_mm <- minor * pixel_mm;
   vol_mmcu <- (4/3) * pi * (minor_mm / 2)^2 * (major_mm / 2);
   
-  return(vol_mmcu);
+  return(vol_mmcu)
 }
 
-#' sph_vol - calculate volume of a spherical object
+#' Calculate Spherical Volume of vignette
+#'
+#' @inheritParams ellps_vol
+#' @param area
+#' @export
+calc_sph_vol <- function(area, pixel_mm) {
+  area_mmsq <- area * pixel_mm^2 
+  vol_mmcu <- (sqrt(area_mmsq)/pi)^3 * (4/3) * pi
+  
+  return(vol_mmcu)
+}
+
+#' Get major and minor axis from zoo_df
 #' 
-#' This function calculates the volume of an object if it were a sphere
-#' Input an ecotaxa df and get back a vector of spherical volums
+#' @param zoo_df the zoo_df
+get_zoo_df_features <- function(zoo_df) {
+  stopifnot(!is.etx_class(zoo_df, 'zoo_df'), 'Must provide zoo_df object')
+  
+  major <- zoo_df$major
+  minor <- zoo_df$minor
+  area <- zoo_df$area
+  return(major = major,
+         minor = minor,
+         area = area)
+}
+
+#' Get vignette biovolume
 #' 
-#' @param df - an ecotaxa dataframe
+#' This function takes a df and will direct it 
+#' 
+#' @param zoo_df a zoo df
+#' @param shape assume a sphere or ellipsoid
+#' @param pixel_mm option to user specify pixel size in mm
 #' 
 #' @export
-sph_vol <- function(df) {
-  area_mmsq <- df$area * df$pixel_mm^2; #get area
-  vol <- sqrt(area_mmsq)^3 * (4/3) * pi;
+biovolume <- function(input, shape, pixel_mm) {
   
-  return(vol);
+  if(is.etx_class(input, 'ecopart_obj') | is.etx_class(input, 'zoo_list')) {
+    stop('To add biovolume to an ecopart object or zoo_list use add_zoo()')
+  } else if (!is.etx_class(zoo_df, 'zoo_df')) {
+    stop('Only zoo_df format accepted')
+  }
+  
+  features <- get_zoo_df_features(zoo_df)
+  
+  if(shape == 'ellipsoid') {
+    vol_mmcu <- calc_ellps_vol(features$major,
+                               features$minor,
+                               pixel_mm)
+    return(vol_mmcu)
+  } else if(shape == 'sphere'){
+    vol_mmcu <- calc_sph_vol(features$area,
+                             pixel_mm)
+    return(vol_mmcu)
+  } else {
+    stop('No valid shape provided')
+  }
+  
 }

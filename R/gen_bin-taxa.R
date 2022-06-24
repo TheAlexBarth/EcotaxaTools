@@ -27,7 +27,7 @@ force_bins_switch <- function(counts) {
   return(ret_counts)
 }
 
-#' bin_taxa() - a modern rendition of bin_by_df
+#' Bin observations by taxa according to some common factor
 #' This version allows for summing over some factor like dry mass or volume
 #' 
 #' It will sum for each individual in a depth bin by taxa

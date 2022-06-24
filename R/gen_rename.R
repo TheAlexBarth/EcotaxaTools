@@ -14,7 +14,9 @@ name_match <- function(taxo_hier, poss_match) {
   return(ret_match)
 }
 
-#' Assign names to a possible list
+#' Assign names based on taxo hierarchy
+#' 
+#' This allows you to use the taxo hierarch to move up to a more broad name
 #' 
 #' @param df an ecotaxa tsv-style dataframe
 #' @param new_names a vector of character names to move towards default
@@ -56,14 +58,24 @@ names_to <- function(df, new_names, suppress_print = F) {
 #' 
 #' @param df an ecotaxa-tsv style data frame
 #' @param drop_names character vector of which names to drop
+#' @param drop_children option to drop taxonomic children 
 #' 
 #' @export
 #' 
 #' @author Alex Barth
-names_drop <- function(df, drop_names) {
-  name_col <- get_col_name(df, 'taxo_name')
-  drop_rows <- which(df[[name_col]] %in% drop_names)
-  rdf <- df[-drop_rows,]
+names_drop <- function(df, drop_names, drop_children = F) {
+  if(!drop_children){
+    name_col <- get_col_name(df, 'taxo_name')
+    drop_rows <- which(df[[name_col]] %in% drop_names)
+  } else if(drop_children){
+    taxo_hier <- get_col_name(df, 'taxo_hierarchy')
+    drop_rows <- df[[taxo_hier]] |> 
+      strsplit(split = '>') |> 
+      sapply(any_in, drop_names) |> 
+      which()
+  }
+  rdf <- structure(df[-drop_rows,],
+                   class = c('data.frame', 'zoo_df'))
   return(rdf)
 }
 
@@ -74,13 +86,23 @@ names_drop <- function(df, drop_names) {
 #' 
 #' @param df an ecotaxa-tsv style data frame
 #' @param keep_names character vector of which names to drop
+#' @param keep_children option to keep children of drop names
 #' 
 #' @export
 #' 
 #' @author Alex Barth
-names_keep <- function(df, keep_names) {
-  name_col <- get_col_name(df, 'taxo_name')
-  drop_rows <- which(!(df[[name_col]] %in% keep_names))
-  rdf <- df[-drop_rows,]
+names_keep <- function(df, keep_names, keep_children=F) {
+  if(!keep_children){
+    name_col <- get_col_name(df, 'taxo_name')
+    keep_rows <- which(df[[name_col]] %in% keep_names)
+  } else if(keep_children){
+    taxo_hier <- get_col_name(df, 'taxo_hierarchy')
+    keep_rows <- df[[taxo_hier]] |> 
+      strsplit(split = '>') |> 
+      sapply(any_in, keep_names) |> 
+      which()
+  }
+  rdf <- structure(df[keep_rows,],
+                   class = c('data.frame','zoo_df'))
   return(rdf)
 }

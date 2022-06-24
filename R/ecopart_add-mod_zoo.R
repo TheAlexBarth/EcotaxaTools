@@ -3,8 +3,9 @@
 #' This function adds a column to the .tsv data frame
 #' 
 #' @param df a tsv ecotaxa dataframe
-#' @param column the colum to add
+#' @param column the column to add
 #' @param col_name the name to assign new column
+#' @export
 #'
 #' @author Alex Barth
 add_col <- function(df, column, col_name) {
@@ -28,13 +29,15 @@ add_col <- function(df, column, col_name) {
 #' @author Alex Barth
 add_zoo <- function(zoo_list, func, col_name, ...) {
   
-  #check if it is an ecopart_obj
-  if(all(names(zoo_list) %in% c('par_files', 'zoo_files', 'meta'))) {
+  #check object type
+  if(is.etx_class(zoo_list, 'ecopart_obj')) {
     robj <- zoo_list
     zoo_list <- zoo_list$zoo_files
     ret_obj <- TRUE
-  } else {
+  } else if(is.etx_class(zoo_list, 'zoo_list')) {
     ret_obj <- FALSE
+  } else {
+    stop('Need to provide either ecopart_obj or zoo_list')
   }
   
   temp_col <- lapply(zoo_list, func, ...) #create the new column
@@ -67,15 +70,19 @@ mod_zoo <- function(zoo_list, func, ...) {
   
   #check if it is an ecopart_obj
   #check if it is an ecopart_obj
-  if(all(names(zoo_list) %in% c('par_files', 'zoo_files', 'meta'))) {
+  if(is.etx_class(zoo_list, 'ecopart_obj')) {
     robj <- zoo_list
     zoo_list <- zoo_list$zoo_files
     ret_obj <- TRUE
-  } else {
+  } else if(is.etx_class(zoo_list, 'zoo_list')){
     ret_obj <- FALSE
+  } else {
+    stop("Need to provide ecopart_obj or zoo_list")
   }
   
   r_list <- lapply(zoo_list, func, ...)
+  r_list <- lapply(zoo_list, assign_etx_class, 'zoo_df')
+  class(r_list) <- c('list', 'zoo_list')
   
   if(ret_obj) {
     robj$zoo_files <- r_list

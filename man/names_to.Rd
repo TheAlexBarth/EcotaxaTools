@@ -2,7 +2,7 @@
 % Please edit documentation in R/gen_rename.R
 \name{names_to}
 \alias{names_to}
-\title{Assign names to a possible list}
+\title{Assign names based on taxo hierarchy}
 \usage{
 names_to(df, new_names, suppress_print = F)
 }
@@ -14,7 +14,7 @@ names_to(df, new_names, suppress_print = F)
 \item{suppress_print}{set to true to stop messages of matches}
 }
 \description{
-Assign names to a possible list
+This allows you to use the taxo hierarch to move up to a more broad name
 }
 \author{
 Alex Barth
