@@ -80,8 +80,9 @@ mod_zoo <- function(zoo_list, func, ...) {
     stop("Need to provide ecopart_obj or zoo_list")
   }
   
-  r_list <- lapply(zoo_list, func, ...)
-  r_list <- lapply(zoo_list, assign_etx_class, 'zoo_df')
+  r_list <- lapply(zoo_list, func, ...) |> 
+    lapply(assign_etx_class, 'zoo_df')
+  
   class(r_list) <- c('list', 'zoo_list')
   
   if(ret_obj) {
