@@ -1,3 +1,45 @@
+#' Add particle zeros
+#' 
+#' Just an inside function I wrote at 2am in the middle of the pacific
+#' 
+#' @param full_seq the full sequence
+#' @param par_sum a par_sum object from calc_par_conc
+add_par_zeros <- function(par_sum, full_seq) {
+  missing_d <- full_seq[which(!(full_seq %in% par_sum$depth))]
+  add_par_rows <- data.frame(depth = missing_d,
+                             par_conc = rep(0, length(missing_d)))
+  ret_par_sum <- rbind(par_sum, add_par_rows)
+  sort_depth <- order(ret_par_sum$depth)
+  ret_par_sum <- ret_par_sum[sort_depth,]
+  return(ret_par_sum)
+}
+
+#' Force 0's to the particle concentrations
+#' 
+#' @param par_sum a par_conc_df
+force_par_zeros <- function(par_sum) {
+  max_d <- max(par_sum$depth)
+  min_d <- min(par_sum$depth)
+  full_seq <- c(min_d:max_d)
+  # if not split into esd bins
+  if(is.null(par_sum$esd_bin)) {
+    if(all(full_seq %in% par_sum$depth)) {
+      return(par_sum)
+    } else {
+      par_sum <- par_sum |> add_par_zeros(full_seq = full_seq)
+      return(par_sum)
+    }
+  } else {
+    esd_bin <- par_sum$esd_bin
+    par_sum_corr <- par_sum[,c(2,3)] |> 
+      split(f = esd_bin) |> 
+      lapply(add_par_zeros, full_seq = full_seq) |> 
+      list_to_tib(new_col_name = 'esd_bin')
+    return(par_sum_corr)
+  }
+}
+
+
 #' inner particle concentration calculator
 #' 
 #' Get the particle volumetric concentraiton from a par file
@@ -36,7 +78,7 @@ calc_par_conc <- function(par, min_esd, max_esd, pixel_mm, img_vol) {
   
   par_sum <- aggregate(list(par_conc = par_conc), 
                        by = list(depth = par$depth),
-                       FUN = sum)
+                       FUN = sum) |> force_par_zeros()
   class(par_sum) <- c(class(par_sum), 'par_conc_df')
   return(par_sum)
 }
@@ -78,7 +120,7 @@ calc_par_conc_bin <- function(par,
   par_sum <- aggregate(list(par_conc = par_conc), 
                        by = list(esd_bin = par$bin_limits,
                                  depth = par$depth),
-                       FUN = sum)
+                       FUN = sum) |> force_par_zeros()
   class(par_sum) <- c(class(par_sum), 'par_conc_df')
   return(par_sum)
 }

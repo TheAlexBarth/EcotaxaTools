@@ -17,8 +17,8 @@ calc_ellps_vol  <-  function(major, minor, pixel_mm) {
 
 #' Calculate Spherical Volume of vignette
 #'
-#' @inheritParams ellps_vol
-#' @param area
+#' @inheritParams calc_ellps_vol
+#' @param area the area in pixels for a vignette
 #' @export
 calc_sph_vol <- function(area, pixel_mm) {
   area_mmsq <- area * pixel_mm^2 
@@ -45,7 +45,7 @@ get_zoo_df_features <- function(zoo_df) {
 #' 
 #' This function takes a df and will direct it 
 #' 
-#' @param zoo_df a zoo df
+#' @param input a zoo_df. use add_zoo for ecopart_objs
 #' @param shape assume a sphere or ellipsoid
 #' @param pixel_mm option to user specify pixel size in mm
 #' 
@@ -54,11 +54,11 @@ biovolume <- function(input, shape, pixel_mm) {
   
   if(is.etx_class(input, 'ecopart_obj') | is.etx_class(input, 'zoo_list')) {
     stop('To add biovolume to an ecopart object or zoo_list use add_zoo()')
-  } else if (!is.etx_class(zoo_df, 'zoo_df')) {
+  } else if (!is.etx_class(input, 'zoo_df')) {
     stop('Only zoo_df format accepted')
   }
   
-  features <- get_zoo_df_features(zoo_df)
+  features <- get_zoo_df_features(input)
   
   if(shape == 'ellipsoid') {
     vol_mmcu <- calc_ellps_vol(features$major,

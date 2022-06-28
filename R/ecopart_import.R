@@ -22,7 +22,7 @@ ecopart_file_check <- function(par_fnames, zoo_fnames){
   
   if(length(zoo_excess) == 0 & length(par_excess)==0) {
     if(length(par_names) != length(zoo_names)){
-      error("There is something deeply wrong with 
+      stop("There is something deeply wrong with 
             the file names checker function")
     }
     keep_zoo = c(1:length(zoo_names))
