@@ -74,8 +74,15 @@ names_drop <- function(df, drop_names, drop_children = F) {
       sapply(any_in, drop_names) |> 
       which()
   }
-  rdf <- structure(df[-drop_rows,],
-                   class = c('data.frame', 'zoo_df'))
+  if(length(drop_rows) == 0) {
+    warning('No droped rows!')
+    rdf <- structure(df,
+                     class = c('data.frame', 'zoo_df'))
+  } else {
+    rdf <- structure(df[-drop_rows,],
+                     class = c('data.frame', 'zoo_df'))
+  }
+  
   return(rdf)
 }
 
