@@ -1,6 +1,6 @@
 Package: EcotaxaTools
 Title: Data wrangling and post-validation processing programs
-Version: 1.0.0.9000
+Version: 1.0.1.9000
 Authors@R: 
     person("Alex", "Barth", , "AB93@email.sc.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7154-6260"))
