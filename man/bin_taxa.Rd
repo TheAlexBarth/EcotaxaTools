@@ -12,6 +12,7 @@ bin_taxa(
   cat_col = NULL,
   func_col = "taxo_name",
   func = length,
+  max_d = NULL,
   force_bins = F
 )
 }
@@ -27,6 +28,8 @@ bin_taxa(
 \item{func_col}{a single character vector of the value to apply function to; esd, biomass, drymass, etc}
 
 \item{func}{the function to apply}
+
+\item{max_d}{the maximum possible depth for a bin}
 
 \item{force_bins}{set to true if you want to ensure observations for all 0's}
 }

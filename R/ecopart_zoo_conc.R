@@ -3,7 +3,7 @@
 #' @inheritParams uvp_conc
 cast_assign <- function(cast_name, ecopart_obj, ...) {
   conc_output <- ecopart_obj |> 
-    uvp_conc(cast_name, ...) |> 
+    uvp_conc(cast_name, max_d = max(ecopart_obj$par_files[[cast_name]]$depth)) |> 
     suppressWarnings()
   
   return(conc_output)

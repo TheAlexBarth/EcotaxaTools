@@ -40,6 +40,7 @@ force_bins_switch <- function(counts) {
 #' @param cat_col a category other than taxa to bin by
 #' @param func_col a single character vector of the value to apply function to; esd, biomass, drymass, etc
 #' @param func the function to apply
+#' @param max_d the maximum possible depth for a bin
 #' @param force_bins set to true if you want to ensure observations for all 0's
 #'  
 #' @export
@@ -50,6 +51,7 @@ bin_taxa <- function(df,
                      cat_col = NULL,
                      func_col = 'taxo_name',
                      func = length,
+                     max_d = NULL,
                      force_bins = F) {
   
   if(is.null(cat_col)){
@@ -66,9 +68,13 @@ bin_taxa <- function(df,
     depth_bins <- df$sample_id #this needs to be improved in the future
   } else {
     depth_col <- get_col_name(df, 'depth_offset')
-
+    
+    if(is.null(max_d)) {
+      max_d <- max(df[[depth_col]])
+    }
+    
     depth_bins <- cut(df[[depth_col]], 
-                      breaks = check_custom(depth_breaks, max(df[[depth_col]])))
+                      breaks = check_custom(depth_breaks, max_d))
   }
   
   unique_bins <- unique(depth_bins)
