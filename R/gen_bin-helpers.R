@@ -20,33 +20,35 @@ bin_format_check <- function(input) {
 #' 
 #' @param df a data frame - should be in tidy format from bin_taxa
 #' @param col_name a column to add 0s for
+#' @param cat_col the category column
 #' 
 #' @export
 #' @author Alex Barth
-add_zeros <- function(df, col_name) {
+add_zeros <- function(df, col_name, cat_col) {
   
-  taxa_names <- unique(df$taxa) #save all taxa names
+  categ <- unique(df[[cat_col]]) #save all taxa names
   
   #set up return df
   rdf <- data.frame(db = df$db,
-                    taxa = df$taxa,
+                    group = df[[cat_col]],
                     ret_col = df[[col_name]])
   
   for(i in 1:length(unique(df$db))) {
     tdf <- df[df$db == unique(df$db)[i],]
-    add_taxa <- taxa_names[which(!(taxa_names %in% tdf$taxa))]
+    add_taxa <- categ[which(!(categ %in% tdf[[cat_col]]))]
     if(length(add_taxa) == 0) {
       next()
     }
     #make new data frame
     ndf <- data.frame(db = rep(unique(df$db)[i], length(add_taxa)),
-                      taxa = add_taxa,
+                      group = df[[cat_col]],
                       ret_col = rep(0, length(add_taxa)))
     rdf <- rbind(rdf,ndf) #add to rdf
   }
   
   rdf <- rdf[order(rdf$db),]
   names(rdf)[3] <- col_name
+  names(rdf)[which(names(rdf) == 'group')] <- cat_col
   return(rdf)
 }
 

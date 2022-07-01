@@ -57,7 +57,7 @@ uvp_conc <- function(ecopart_obj, cast_name, depth_breaks, ...) {
   temp_merge <- merge(counts, vol_df)
   temp_merge$conc_m3 <- (temp_merge$x / temp_merge$vol_sampled) * 1000
   
-  rdf <- add_zeros(temp_merge, 'conc_m3')
+  rdf <- add_zeros(temp_merge, 'conc_m3', cat_col)
   class(rdf) <- c('data.frame', 'etx_conc_obj')
   return(rdf)
 }
