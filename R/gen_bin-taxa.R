@@ -40,14 +40,20 @@ force_bins_switch <- function(counts) {
 #' @param func_col a single character vector of the value to apply function to; esd, biomass, drymass, etc
 #' @param func the function to apply
 #' @param force_bins set to true if you want to ensure observations for all 0's
-#' 
+#'  
 #' @export
 #' @author Alex Barth
-bin_taxa <- function(df,depth_breaks,zooscan = F,
-                    func_col = 'taxo_name',func = length,
-                    force_bins = F) {
+bin_taxa <- function(df,
+                     depth_breaks,
+                     zooscan = F,
+                     cat_col = NULL,
+                     func_col = 'taxo_name',
+                     func = length,
+                     force_bins = F) {
   
-  cat_col <- get_col_name(df, 'taxo_name')
+  if(is.null(cat_col)){
+    cat_col <- get_col_name(df, 'taxo_name')
+  }
   
   #get indexing names
   if(func_col == 'taxo_name') {
@@ -71,13 +77,29 @@ bin_taxa <- function(df,depth_breaks,zooscan = F,
                       FUN = func)
   
   agg_df[is.na(agg_df)] <- 0
+  
+  
+  
   if(zooscan == F) {
     agg_df <- order_bins(agg_df)
   }
+  
   if(force_bins == T) {
     rdf <- force_bins_switch(agg_df)
+    
+    # annoying fix to taxa name issue
+    if(!(is.null(cat_col))) {
+      names(rdf)[which(names(rdf) == 'taxa')] <- cat_col
+    }
+    
     return(rdf)
+  }
+  
+  # annoying fix to taxa name issue
+  if(!(is.null(cat_col))) {
+    names(agg_df)[which(names(agg_df) == 'taxa')] <- cat_col
   }
   return(agg_df)
 }
+
 
