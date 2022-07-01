@@ -3,7 +3,7 @@
 #' @inheritParams uvp_conc
 cast_assign <- function(cast_name, ecopart_obj, ...) {
   conc_output <- ecopart_obj |> 
-    uvp_conc(cast_name, max_d = max(ecopart_obj$par_files[[cast_name]]$depth)) |> 
+    uvp_conc(cast_name, max_d = max(ecopart_obj$par_files[[cast_name]]$depth),...) |> 
     suppressWarnings()
   
   return(conc_output)
@@ -93,7 +93,7 @@ uvp_zoo_conc <- function(ecopart_obj,
   if(length(cast_name) > 1) {
     ret_list <- cast_name |> lapply(cast_assign,
                                     ecopart_obj,
-                                    breaks,
+                                    depth_breaks = breaks,
                                     ...)
                                     
     names(ret_list) <- cast_name
