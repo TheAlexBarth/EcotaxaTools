@@ -9,6 +9,7 @@ bin_taxa(
   df,
   depth_breaks,
   zooscan = F,
+  cat_col = NULL,
   func_col = "taxo_name",
   func = length,
   force_bins = F
@@ -20,6 +21,8 @@ bin_taxa(
 \item{depth_breaks}{the limits of what bins should be made}
 
 \item{zooscan}{if the df is a zooscan export set to true, default false}
+
+\item{cat_col}{a category other than taxa to bin by}
 
 \item{func_col}{a single character vector of the value to apply function to; esd, biomass, drymass, etc}
 

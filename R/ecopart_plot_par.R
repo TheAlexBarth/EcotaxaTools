@@ -38,7 +38,7 @@ bin_par_plot <- function(par_conc_df, ...) {
 #' Plot a particle diagram
 #' 
 #' @import ggplot2
-#' @importFrom grDevices windows
+#' @importFrom grDevices dev.new
 #' 
 #' @inheritParams uvp_par_conc
 #' @param open_windows set to true will open plots for each profile

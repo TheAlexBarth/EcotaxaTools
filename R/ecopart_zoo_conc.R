@@ -95,6 +95,8 @@ uvp_zoo_conc <- function(ecopart_obj,
                                     ecopart_obj,
                                     breaks,
                                     ...)
+                                    
+    names(ret_list) <- cast_name
     
     class(ret_list) <- c('list','zoo_conc_list')
     return(ret_list)

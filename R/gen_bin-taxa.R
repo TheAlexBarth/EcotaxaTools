@@ -37,6 +37,7 @@ force_bins_switch <- function(counts) {
 #' @param df a data frame should have a taxo_name, name, or object_annotation_category column
 #' @param depth_breaks the limits of what bins should be made
 #' @param zooscan if the df is a zooscan export set to true, default false
+#' @param cat_col a category other than taxa to bin by
 #' @param func_col a single character vector of the value to apply function to; esd, biomass, drymass, etc
 #' @param func the function to apply
 #' @param force_bins set to true if you want to ensure observations for all 0's
