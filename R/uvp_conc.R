@@ -1,30 +1,3 @@
-#' Get Volumes from Par files
-#' 
-#' This takes in the par_files from an ecopart object
-#' then returns the volume sampled in 1m depth bins
-#' 
-#' @param ecopart_obj a list from ecopart_import()
-#'
-#' @export
-#' 
-#' @author Alex Barth
-get_ecopart_vol <- function(ecopart_obj) {
-  
-  par_files = ecopart_obj$par_files
-  par_meta = ecopart_obj$meta
-  ecopar_vol <- vector(mode = "list",length(par_files)) #storage
-  for(i in 1:length(par_files)){
-    ecopar_vol[[i]] <- unique(par_files[[i]][,c(1,2)]) #get the depth and imgcount
-    ecopar_vol[[i]][,2] <- ecopar_vol[[i]][,2] * par_meta$acq_volimage #multiple by image size
-    names(ecopar_vol[[i]])[2] <- "vol_sampled" #name it
-  }
-  names(ecopar_vol) <- names(par_files)
-  
-  return(ecopar_vol)
-}
-
-
-
 #' Calculate UVP Concentration from Ecopart Object
 #' 
 #' This function can take in an ecopart object (from ecopart_import)
@@ -36,7 +9,7 @@ get_ecopart_vol <- function(ecopart_obj) {
 #' @param ecopart_obj an ecopart object list
 #' @param cast_name name of the cast to get concentration of
 #' @param depth_breaks a vector of depth break ranges
-#' @param ... pass to \code{bin_taxa()} for func and func_col
+#' @param ... pass to [bin_taxa()] for func and func_col
 #' 
 #' @importFrom tibble as_tibble
 #' 
@@ -44,6 +17,11 @@ get_ecopart_vol <- function(ecopart_obj) {
 #' 
 #' @author Alex Barth
 uvp_conc <- function(ecopart_obj, cast_name, depth_breaks, ...) {
+  warning(
+    "You are using uvp_conc directly. It is suggested to use the new option
+    uvp_zoo_conc() for better performance and options. This is a limited interior
+    which is only still available for my old code to still run."
+  )
   
   #safety check for cast names
   if(!(is.etx_class(ecopart_obj, 'ecopart_obj'))){
