@@ -1,3 +1,15 @@
+#' Inside function to assign casts for lapply
+#' 
+#' @inheritParams uvp_conc
+cast_assign <- function(cast_name, ecopart_obj, ...) {
+  conc_output <- ecopart_obj |> 
+    uvp_conc(cast_name, ...) |> 
+    suppressWarnings()
+  
+  return(conc_output)
+}
+
+
 #' Calculate UVP Concentration from Ecopart Object
 #' 
 #' This function can take in an ecopart object (from ecopart_import)
@@ -50,3 +62,47 @@ uvp_conc <- function(ecopart_obj, cast_name, depth_breaks, ...) {
   return(rdf)
 }
 
+
+#' Calculate UVP Zooplankton Concentration from an Ecopart Object
+#' 
+#' This function takes in an ecopart object and will calculate the
+#' concentration for zooplankton data. This is a big wrapper function to
+#' build and add functionality to [uvp_conc()].
+#' 
+#' @param ecopart_obj an ecopart object list
+#' @param cast_name the name (or names of a cast)
+#' @param breaks a vector to break on
+#' @param ... pass into [bin_taxa()]
+#' 
+#' @export
+uvp_zoo_conc <- function(ecopart_obj,
+                         cast_name = NULL,
+                         breaks,
+                         ...) {
+  
+  if(!(is.etx_class(ecopart_obj, 'ecopart_obj'))) {
+    'Must provide an ecopart_obj class object'
+  }
+  
+  
+  # go for the full cast list
+  if(is.null(cast_name)) {
+    cast_name <- names(ecopart_obj$zoo_files)
+  }
+  
+  if(length(cast_name) > 1) {
+    ret_list <- cast_name |> lapply(cast_assign,
+                                    ecopart_obj,
+                                    breaks,
+                                    ...)
+    
+    class(ret_list) <- c('list','zoo_conc_list')
+    return(ret_list)
+  } else {
+    ret_df <- uvp_conc(ecopart_obj = ecopart_obj,
+                       cast_name = cast_name,
+                       depth_breaks = breaks,
+                       ...)
+    return(ret_df)
+  }
+}
