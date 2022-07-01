@@ -3,13 +3,12 @@
 #' This function calculates the volume for each 1-m depth bin 
 #' 
 #' @param df a data frame to enter
-#' @param method "Equal Space", "Custom", "Equal Number"
 #' @param depth_breaks limits for depth bins
 #' 
 #' @importFrom stats aggregate
 #' 
 #' @export
-ecopart_vol_bin <- function(df,method,depth_breaks) {
+ecopart_vol_bin <- function(df,depth_breaks) {
   
   #check that df is correct format
   if(!identical(names(df), c("depth", "vol_sampled"))) {

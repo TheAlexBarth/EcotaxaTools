@@ -4,12 +4,10 @@
 \alias{ecopart_vol_bin}
 \title{Ecopart Volume Binning}
 \usage{
-ecopart_vol_bin(df, method, depth_breaks)
+ecopart_vol_bin(df, depth_breaks)
 }
 \arguments{
 \item{df}{a data frame to enter}
-
-\item{method}{"Equal Space", "Custom", "Equal Number"}
 
 \item{depth_breaks}{limits for depth bins}
 }
