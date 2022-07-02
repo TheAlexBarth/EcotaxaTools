@@ -50,7 +50,7 @@ average_casts <- function(zoo_conc_list, name_map = NULL) {
     ret_list <- vector('list',length(name_map))
     names(ret_list) <- names(name_map)
     for(i in 1:length(name_map)) {
-      index <- which(names(zoo_conc_list) %in% name_map[i])
+      index <- which(names(zoo_conc_list) %in% name_map[[i]])
       ret_list[[i]] <- zoo_conc_list[index] |> avg_casts()
     }
     return(ret_list)
