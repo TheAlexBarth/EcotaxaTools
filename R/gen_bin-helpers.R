@@ -24,31 +24,30 @@ bin_format_check <- function(input) {
 #' 
 #' @export
 #' @author Alex Barth
-add_zeros <- function(df, col_name, cat_col) {
+add_zeros <- function(df, col_name) {
   
-  categ <- unique(df[[cat_col]]) #save all taxa names
+  taxa_names <- unique(df$taxa) #save all taxa names
   
   #set up return df
   rdf <- data.frame(db = df$db,
-                    group = df[[cat_col]],
+                    taxa = df$taxa,
                     ret_col = df[[col_name]])
   
   for(i in 1:length(unique(df$db))) {
     tdf <- df[df$db == unique(df$db)[i],]
-    add_taxa <- categ[which(!(categ %in% tdf[[cat_col]]))]
+    add_taxa <- taxa_names[which(!(taxa_names %in% tdf$taxa))]
     if(length(add_taxa) == 0) {
       next()
     }
     #make new data frame
     ndf <- data.frame(db = rep(unique(df$db)[i], length(add_taxa)),
-                      group = df[[cat_col]],
+                      taxa = add_taxa,
                       ret_col = rep(0, length(add_taxa)))
     rdf <- rbind(rdf,ndf) #add to rdf
   }
   
   rdf <- rdf[order(rdf$db),]
   names(rdf)[3] <- col_name
-  names(rdf)[which(names(rdf) == 'group')] <- cat_col
   return(rdf)
 }
 

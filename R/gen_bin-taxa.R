@@ -96,7 +96,7 @@ bin_taxa <- function(df,
     
     # annoying fix to taxa name issue
     if(!(is.null(cat_col))) {
-      names(rdf)[which(names(rdf) == 'taxa')] <- cat_col
+      names(rdf)[which(names(rdf) == 'taxa')] <- 'group'
     }
     
     return(rdf)
@@ -104,7 +104,7 @@ bin_taxa <- function(df,
   
   # annoying fix to taxa name issue
   if(!(is.null(cat_col))) {
-    names(agg_df)[which(names(agg_df) == 'taxa')] <- cat_col
+    names(agg_df)[which(names(agg_df) == 'taxa')] <- 'group'
   }
   return(agg_df)
 }
