@@ -15,3 +15,6 @@ Finally, I have not prioritized speed when writing this code. Generally, most us
 
 If there are any issues, contact Alex Barth AB93@email.sc.edu or abarth1014@gmail.com
 
+## Data availability:
+In this package, casts from AE1917 are provided for example purposes. Feel free to use this data for learning purposes and experimenting with the code. However, these data are not intended for public access for analyses. All data are owned by Josh Stone. If you are interested in data sharing please contact stone@sc.edu
+

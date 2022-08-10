@@ -7,7 +7,7 @@
 ecopart_import(dat_path, trim_to_zoo = F)
 }
 \arguments{
-\item{dat_path}{the path in your compute to the file}
+\item{dat_path}{the path in your computer to the file}
 
 \item{trim_to_zoo}{option to trim profiles for those where zoops are available}
 }
@@ -15,6 +15,21 @@ ecopart_import(dat_path, trim_to_zoo = F)
 This function requires a path to a folder with the raw output from ecopart
 and is primarily designed for UVP export objects. It will return a list of lists
 each list holds tibbles for each cast in a project for: particle, plankton, volume, meta
+Make sure to understand the class structure used by ecopart_import.
+See more at \href{https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/}
+}
+\examples{
+# general use of ecopart import
+dir_path = system.file('extdata','ae1917_example-data', 
+                       package = 'EcotaxaTools', mustWork = T) #specify file folder
+
+ecp_obj <- ecopart_import(dir_path)
+
+# With the example dataset, we are missing zoofiles for bats361_ctd18
+# You always want to know *why* you are missing a file
+# However, there are cases where this is normal
+# If you wish to only keep casts with zoo_files, use trim_to_zoo = T
+ecp_obj <- ecopart_import(dir_path, trim_to_zoo = T)
 }
 \author{
 Alex Barth
