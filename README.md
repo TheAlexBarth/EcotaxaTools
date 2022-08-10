@@ -3,34 +3,15 @@ A variety of tools to process and quickly analyze data from Ecotaxa & Ecopart
 This package is under heavy development. For a tutorial on it's use check out [my tutorial](https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/)
 For updates to the package check out the [updates page](https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/info_updates-page.html)
 
-If there are any issues, contact Alex Barth abarth1014@gmail.com
+## Some thoughts on this package:
+This package aims to take large blocks of code which typically are used to process UVP (or other ecotaxa-friendly instruments) and simplify common tasks.\n
+Much of this package was originally written as I produced code to process UVP data on my personal projects. Only after developing this package did I realize it will be likely useful to to others and started to make a more developed product. As a result, there may be some messy code and non-direct pipelines. Please let me know if you have an improvement you'd like to contribute to the code or workflow.\n\n
 
-## Understanding the package files
+When writing this package, I prioritized ease-of-use. I'd like someone who is new to coding to find this package intuitive. To do this, I try to both minimize reliance on additional packages (sorry tidyverse) when possible. Additionally, this package is made for pipe-ing (|>) and thus requires R 4.2 or newer. While I previously was hesitant to adopt piping, it is only growing in popularity in the R community. Particularly for new users, piping makes clean code for quick data transformation.\n\n
 
-### app
- - app_multimanager.R: This contains the multi_manager() function and support files
+For those interested, I implemented a class structure specific to ecotaxa/ecopart objects. This may be unfamiliar to many strictly R coders however it allows the workflow to be much smoother. This approach is what allows for different datatypes to be fed into the same function and still work. The class structure is likely not something a general user of this package will have to think about. However, if you are interested in developing this package further, please consider how to utilize my 'etx classes'.
 
-### archived
- - Primarily Functions to be phased out but kept in for some old code which might require these formats
- - binByTools.R: the old bin_by() and bin_by_df() functions
- - tsvTrim.R: a trimming function to limit tsv columns
- - vol_sampled: a function to calculate UVP volume sampled in bins from original project files
+Finally, I have not prioritized speed when writing this code. Generally, most users don't need data processed at lightning speeds. However, I do try to be mindful that R is very slow in iteration. I use the apply functions as much as possible. Only on very rare occasions are loops built into functions. That said, if you are processing a large number of ecopart files, concentration functions will run slowly.
 
-### ecopart
- - add_zoo.R: A function to add a column with function to all zoo_files in an ecopart object list
- - import.R: Importing ecopart files from a directory
- - vol_bin.R: get volume in bins from UVP data ***NEED TO UPDATE***
- - merge_casts.R: Merge casts based on some grouping of cast names
+If there are any issues, contact Alex Barth AB93@email.sc.edu or abarth1014@gmail.com
 
-### gen: files generalizable to any tools
- - bin-helpers.R: functions for helping deal with bin_taxa data
- - bin-taxa.R: Get summary by taxa ID in user-specified depth bins
- - helper-functions.R: general helper functions; add_range(), nearest(), timeOfDay() ***NEED TO UPDATE***, get_col_name()
- - integration-tools.R: linear interpolation and integration between depth bins
- - obj-volume.R: Get the volume of objects in an ecotaxa-style tibble. Two options sph_vol(); ellps_vol()
- - read-etx.R: import ecotaxa .tsv files
- - rename.R: a creative way to rename taxa
- - rel-taxa.R: Get the relative abundance of different named taxa
-
-### UVP: files for dealing with UVP-specific data
- - conc.R: get concentration of a given cast ***NEED TO UPDATE FOR Name Col Selector***
