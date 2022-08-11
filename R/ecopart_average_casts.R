@@ -18,7 +18,7 @@ avg_casts <- function(zoo_conc_list) {
   mean_df <- aggregate(list(mean = conc_df$conc_m3), 
                        by = list(db = conc_df$db,
                                  group = conc_df[[cat_col]]),
-                       FUN = mean)
+                       FUN = mean, na.rm = T)
   
   sd_df <- aggregate(list(sd = conc_df$conc_m3), 
                      by = list(db = conc_df$db,
