@@ -12,7 +12,8 @@ assign_etx_class(input, add_class)
 \item{add_class}{the class to assign (can be a character vector)}
 }
 \description{
-Primarily for looping in lapply
+Primarily for looping in lapply. However, this will also preserve the
+existing class(es) of the object.
 }
 \author{
 Alex Barth

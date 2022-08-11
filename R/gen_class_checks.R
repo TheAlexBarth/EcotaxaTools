@@ -15,7 +15,8 @@ is.etx_class <- function(input, classCheck) {
 
 #' Assign an etx class
 #' 
-#' Primarily for looping in lapply
+#' Primarily for looping in lapply. However, this will also preserve the
+#' existing class(es) of the object.
 #' 
 #' @param input the input of object to assign a class
 #' @param add_class the class to assign (can be a character vector)

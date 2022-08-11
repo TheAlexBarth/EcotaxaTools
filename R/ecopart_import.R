@@ -55,11 +55,15 @@ ecopart_file_check <- function(par_fnames, zoo_fnames){
 #' This function requires a path to a folder with the raw output from ecopart
 #' and is primarily designed for UVP export objects. It will return a list of lists
 #' each list holds tibbles for each cast in a project for: particle, plankton, volume, meta
+#' Make sure to understand the class structure used by ecopart_import.
+#' See more at \href{https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/}
 #' 
 #' @importFrom readr read_tsv cols
 #' 
-#' @param dat_path the path in your compute to the file
+#' @param dat_path the path in your computer to the file
 #' @param trim_to_zoo option to trim profiles for those where zoops are available
+#' 
+#' @example man/examples/ecopart_import.R
 #' 
 #' @export
 #' 
