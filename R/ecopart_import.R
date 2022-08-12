@@ -56,7 +56,7 @@ ecopart_file_check <- function(par_fnames, zoo_fnames){
 #' and is primarily designed for UVP export objects. It will return a list of lists
 #' each list holds tibbles for each cast in a project for: particle, plankton, volume, meta
 #' Make sure to understand the class structure used by ecopart_import.
-#' See more at \href{https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/}
+#' See more at \href{https://thealexbarth.github.io/Ecotaxa_Tools_Tutorial/}{Ecotaxa Tools Tutorial}
 #' 
 #' @importFrom readr read_tsv cols
 #' 

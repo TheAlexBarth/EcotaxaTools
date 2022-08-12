@@ -8,7 +8,7 @@
 An object of class \code{'ecopart_obj'}; see \code{\link[EcotaxaTools]{ecopart_import}}.
 }
 \source{
-\href{https://ecopart.obs-vlfr.fr/}
+\href{https://ecopart.obs-vlfr.fr/}{ecopart}
 }
 \usage{
 data(ecopart_example)

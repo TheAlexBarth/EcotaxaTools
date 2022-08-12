@@ -8,7 +8,7 @@
 #' @export
 get_all <- function(zoo, col_name, pixel_conv = F){
   if(is.etx_class(zoo,'ecopart_obj')){
-    all_rows <- ecopart_obj$zoo_files |> list_to_tib('cast')
+    all_rows <- zoo$zoo_files |> list_to_tib('cast')
     if(pixel_conv) {
       pix_mm <- unique(zoo$meta$acq_pixel)
       if(length(pix_mm) > 1){
@@ -22,7 +22,7 @@ get_all <- function(zoo, col_name, pixel_conv = F){
     }
   }
   
-  all_out <- zoo[[col_name]]
+  all_out <- all_rows[[col_name]]
   
   if(pixel_conv) {
     all_out <- all_out * pix_mm

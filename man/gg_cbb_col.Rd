@@ -8,8 +8,8 @@ gg_cbb_col(n)
 }
 \description{
 Define a color-blind friendly palette for up to 8 items.
-Colors are from the r-cookbook:
-\ref{http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette}
+Colors are from the
+\href{http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette}{r-cookbook}
 More than 8 will be defined by ggplot defaults.
 }
 \examples{

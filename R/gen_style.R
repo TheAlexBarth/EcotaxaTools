@@ -9,8 +9,8 @@ gg_color_hue <- function(n) {
 #' Colorblind friendly pallete
 #' 
 #' Define a color-blind friendly palette for up to 8 items.
-#' Colors are from the r-cookbook: 
-#' \href{http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette}
+#' Colors are from the
+#' \href{http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette}{r-cookbook}
 #' More than 8 will be defined by ggplot defaults.
 #' 
 #' 
