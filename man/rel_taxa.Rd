@@ -10,7 +10,11 @@ rel_taxa(ecodf)
 \item{ecodf}{a list, data frame, or ecopart_obj}
 }
 \description{
-This will take either a list or a df and get the relative abundace
+This will take either a list or a df and get the relative abundance
+}
+\examples{
+man/examples/rel_taxa.R
+
 }
 \author{
 Alex Barth
