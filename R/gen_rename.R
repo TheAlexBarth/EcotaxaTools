@@ -22,6 +22,8 @@ name_match <- function(taxo_hier, poss_match) {
 #' @param new_names a vector of character names to move towards default
 #' @param suppress_print set to true to stop messages of matches
 #' 
+#' @example man/examples/names_to.R
+#' 
 #' @export
 #' 
 #' @author Alex Barth
@@ -60,6 +62,8 @@ names_to <- function(df, new_names, suppress_print = F) {
 #' @param drop_names character vector of which names to drop
 #' @param drop_children option to drop taxonomic children 
 #' 
+#' @example man/examples/names_drop.R
+#' 
 #' @export
 #' 
 #' @author Alex Barth
@@ -94,6 +98,8 @@ names_drop <- function(df, drop_names, drop_children = F) {
 #' @param df an ecotaxa-tsv style data frame
 #' @param keep_names character vector of which names to drop
 #' @param keep_children option to keep children of drop names
+#' 
+#' @example man/examples/names_keep.R
 #' 
 #' @export
 #' 
