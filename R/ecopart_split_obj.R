@@ -3,6 +3,8 @@
 #' @param ecopart_obj ecopart object to split
 #' @param split_by character corresponding to a metadata column
 #' 
+#' @example man/examples/split_ecopart_obj.R
+#' 
 #' @export
 split_ecopart_obj <- function(ecopart_obj, split_by) {
   ret_list <- vector('list', length(unique(ecopart_obj$meta[[split_by]])))
