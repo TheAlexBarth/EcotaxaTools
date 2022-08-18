@@ -9,14 +9,9 @@
 #' @export
 #' @author Alex Barth
 merge_casts <- function(cast_list, name_map) {
-  #some general safety checks
-  if(class(name_map) != 'list') {
-    stop('name_map must be a list')
-  }
-  
   
   #if it is an ecopart_obj, will need to pool both zoo_files & par_files
-  if(all(names(cast_list) %in% c('par_files', 'zoo_files', 'meta'))) {
+  if(is.etx_class(cast_list, 'ecopart_obj')) {
     robj <- vector(mode = 'list', 3)
     names(robj) = names(cast_list)
     
@@ -26,13 +21,13 @@ merge_casts <- function(cast_list, name_map) {
                                 class = c('list','par_list'))
     robj$meta <- cast_list$meta
     
-    return(robj)
+    return(structure(robj,
+                     class = 'ecopart_obj'))
   }
   
   
   #if it is a list of cast dataframes:
-  rlist <- structure(lapply(name_map, pool_casts, cast_list),
-                     class = c('list','ecopart_obj'))
+  rlist <- lapply(name_map, pool_casts, cast_list)
   return(rlist)
 }
 
