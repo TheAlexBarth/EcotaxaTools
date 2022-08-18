@@ -1,32 +1,3 @@
-#' Inside function for force bins option
-#' 
-#' @param tdf the split dataframe
-#' @param taxa_names all possible taxa names
-add_count_zeros <- function(tdf, taxa_names){
-  if(all(taxa_names %in% tdf$taxa)) {
-    return(tdf)
-  } else {
-    add_taxa <- taxa_names[which(!(taxa_names %in% tdf$taxa))]
-    rdf <- data.frame(taxa = c(tdf$taxa, add_taxa),
-                      x = c(tdf$x, rep(0,length(add_taxa))))
-    return(rdf)
-  }
-}
-
-#' Force bins will add zeros to bins that don't have any observations
-#' 
-#' This function should be used with consideration. It is necessary for the UVP
-#' because zoo files are blind as to where the UVP did actually collect an image
-#' 
-#' @param counts the count vector
-force_bins_switch <- function(counts) {
-  count_bins <- split(counts[,2:3], f=counts$db)
-  adj_counts <- lapply(count_bins, add_count_zeros, unique(counts$taxa))
-  ret_counts <- list_to_tib(adj_counts, 'db')
-  ret_counts <- order_bins(ret_counts[,c(3,1,2)])
-  return(ret_counts)
-}
-
 #' Bin observations by taxa according to some common factor
 #' This version allows for summing over some factor like dry mass or volume
 #' 
@@ -109,4 +80,31 @@ bin_taxa <- function(df,
   return(agg_df)
 }
 
+#' Inside function for force bins option
+#' 
+#' @param tdf the split dataframe
+#' @param taxa_names all possible taxa names
+add_count_zeros <- function(tdf, taxa_names){
+  if(all(taxa_names %in% tdf$taxa)) {
+    return(tdf)
+  } else {
+    add_taxa <- taxa_names[which(!(taxa_names %in% tdf$taxa))]
+    rdf <- data.frame(taxa = c(tdf$taxa, add_taxa),
+                      x = c(tdf$x, rep(0,length(add_taxa))))
+    return(rdf)
+  }
+}
 
+#' Force bins will add zeros to bins that don't have any observations
+#' 
+#' This function should be used with consideration. It is necessary for the UVP
+#' because zoo files are blind as to where the UVP did actually collect an image
+#' 
+#' @param counts the count vector
+force_bins_switch <- function(counts) {
+  count_bins <- split(counts[,2:3], f=counts$db)
+  adj_counts <- lapply(count_bins, add_count_zeros, unique(counts$taxa))
+  ret_counts <- list_to_tib(adj_counts, 'db')
+  ret_counts <- order_bins(ret_counts[,c(3,1,2)])
+  return(ret_counts)
+}
