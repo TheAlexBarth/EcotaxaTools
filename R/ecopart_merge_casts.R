@@ -6,6 +6,8 @@
 #' @param cast_list either a list of dataframes or an ecopart_obj
 #' @param name_map a list with cast names to combine - names of list items will be new names
 #' 
+#' @examples man/examples/merge_casts.R
+#' 
 #' @export
 #' @author Alex Barth
 merge_casts <- function(cast_list, name_map) {

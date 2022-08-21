@@ -20,6 +20,10 @@ timeOfDay(time, sunrise, sunset, buffer, tz = "UTC")
 \description{
 Calculate the time of day as day, twilight, buffer
 }
+\examples{
+timeOfDay("14:00:00", "06:00:00", "18:00:00", buffer = .5) #Should return day
+
+}
 \author{
 Alex Barth
 }

@@ -42,6 +42,9 @@ getTime <- function(time) {
 #' @param buffer range around sunset/sunrise to assign as twilight in hours
 #' @param tz timezone
 #' 
+#' @examples 
+#' timeOfDay("14:00:00", "06:00:00", "18:00:00", buffer = .5) #Should return day
+#' 
 #' @export
 #' @author Alex Barth
 timeOfDay <- function(time,sunrise,sunset,buffer, tz = "UTC") {
@@ -96,6 +99,11 @@ get_col_name <- function(df, goal_name = NULL,possible = NULL){
 #' 
 #' @param checkVect the input vector
 #' @param refVect the reference vector
+#' 
+#' @param examples
+#' any_in(c(0,4,3,1), c(1,7,6,8)) #returns TRUE
+#' any_in(c(0,4,3), c(1,7,8,6)) #return FALSE
+#' 
 #' @export
 any_in <- function(checkVect, refVect){
   if(any(checkVect %in% refVect)) {

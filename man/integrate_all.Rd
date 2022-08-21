@@ -14,5 +14,5 @@ integrate_all(df, need_format = F, ...)
 \item{...}{arguements to pass to integrate()}
 }
 \description{
-Apply trapz integrate to a list of data frames
+Apply trap integrate to a list of data frames
 }

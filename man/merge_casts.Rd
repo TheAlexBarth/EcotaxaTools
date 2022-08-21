@@ -15,6 +15,10 @@ merge_casts(cast_list, name_map)
 This function takes in a list of casts and will combine them based on a list
 of possible names to combine
 }
+\examples{
+man/examples/merge_casts.R
+
+}
 \author{
 Alex Barth
 }

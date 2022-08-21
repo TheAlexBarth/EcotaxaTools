@@ -10,6 +10,9 @@ any_in(checkVect, refVect)
 \item{checkVect}{the input vector}
 
 \item{refVect}{the reference vector}
+
+\item{examples}{any_in(c(0,4,3,1), c(1,7,6,8)) #returns TRUE
+any_in(c(0,4,3), c(1,7,8,6)) #return FALSE}
 }
 \description{
 Simply a wrapper for \%in\% to check if there are any
