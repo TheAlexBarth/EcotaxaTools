@@ -82,7 +82,7 @@ integrate_all <- function(df, need_format = F, ...){
   
   # a little fix for old code:
   taxa_col <- 'taxa'
-  if(is.null(crustacea_c1[[taxa_col]])) {
+  if(is.null(df[[taxa_col]])) {
     taxa_col <- 'group'
   }
   
