@@ -57,8 +57,13 @@ trap_integrate <- function(x,y,min_x,max_x,...) {
 #' @param df the input data frame
 #' @param ... arguments to pass to integrate
 integration_matcher <- function(df,...) {
-  out <- trap_integrate(x = df$mp, y = df$conc_m3,
+  if(is.etx_class(df, 'avg_cast')){
+    out <- trap_integrate(x = df$mp, y = df$mean,
                           min_x = min(df$min_d), max_x = max(df$max_d),...)
+  } else {
+    out <- trap_integrate(x = df$mp, y = df$conc_m3,
+                            min_x = min(df$min_d), max_x = max(df$max_d),...)
+  }
   return(out)
 }
 

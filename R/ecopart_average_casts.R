@@ -57,5 +57,6 @@ avg_casts <- function(zoo_conc_list) {
   #format to be 0 if NA
   sd_df$sd[is.na(sd_df$sd)] <- 0
   
-  return(structure(merge(mean_df, sd_df), class = c('data.frame', 'etx_conc_obj')))
+  return(structure(merge(mean_df, sd_df), class = c('data.frame', 'etx_conc_obj',
+                                                    'avg_cast')))
 }
