@@ -10,8 +10,6 @@ add_zeros(df, col_name)
 \item{df}{a data frame - should be in tidy format from bin_taxa}
 
 \item{col_name}{a column to add 0s for}
-
-\item{cat_col}{the category column}
 }
 \description{
 This function adds 0's for the depth bins which don't have any present taxa

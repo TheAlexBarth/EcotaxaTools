@@ -6,6 +6,9 @@
 \usage{
 gg_cbb_col(n)
 }
+\arguments{
+\item{n}{number to ID}
+}
 \description{
 Define a color-blind friendly palette for up to 8 items.
 Colors are from the

@@ -1,6 +1,6 @@
 # general use of ecopart import
 dir_path = system.file('extdata','ae1917_example-data', 
-                       package = 'EcotaxaTools', mustWork = T) #specify file folder
+                       package = 'EcotaxaTools', mustWork = TRUE) #specify file folder
 
 ecp_obj <- ecopart_import(dir_path)
 

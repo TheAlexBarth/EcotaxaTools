@@ -28,8 +28,6 @@ particle_plot(
 \item{pixel_mm}{pixel conversion}
 
 \item{img_vol}{image volume size}
-
-\item{...}{aes to pass on to ggplot geom stat}
 }
 \description{
 Plot a particle diagram

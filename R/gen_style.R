@@ -13,6 +13,7 @@ gg_color_hue <- function(n) {
 #' \href{http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette}{r-cookbook}
 #' More than 8 will be defined by ggplot defaults.
 #' 
+#' @param n number to ID
 #' 
 #' @examples 
 #' gg_cbb_col(3)

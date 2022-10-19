@@ -100,7 +100,7 @@ get_col_name <- function(df, goal_name = NULL,possible = NULL){
 #' @param checkVect the input vector
 #' @param refVect the reference vector
 #' 
-#' @param examples
+#' @examples
 #' any_in(c(0,4,3,1), c(1,7,6,8)) #returns TRUE
 #' any_in(c(0,4,3), c(1,7,8,6)) #return FALSE
 #' 

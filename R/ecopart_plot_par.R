@@ -42,7 +42,6 @@ bin_par_plot <- function(par_conc_df, ...) {
 #' 
 #' @inheritParams uvp_par_conc
 #' @param open_windows set to true will open plots for each profile
-#' @param ... aes to pass on to ggplot geom stat
 #' @export
 particle_plot <- function(par,
                           min_esd = 0,

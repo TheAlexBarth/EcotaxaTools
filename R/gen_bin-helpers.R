@@ -20,7 +20,6 @@ bin_format_check <- function(input) {
 #' 
 #' @param df a data frame - should be in tidy format from bin_taxa
 #' @param col_name a column to add 0s for
-#' @param cat_col the category column
 #' 
 #' @export
 #' @author Alex Barth
