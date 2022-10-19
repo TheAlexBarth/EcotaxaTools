@@ -11,6 +11,3 @@ Sometimes you might need to instatiate new objects. If you just make a list,
 it can be tedious to resurrect the class structure for the new object.
 You can use this to instatiate an empty object
 }
-\details{
-export
-}

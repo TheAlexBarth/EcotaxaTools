@@ -4,7 +4,7 @@
 #' it can be tedious to resurrect the class structure for the new object.
 #' You can use this to instatiate an empty object
 #' 
-#' export
+#' @export
 ecopart_obj <- function(){
   
   init_obj <- structure(list(),
