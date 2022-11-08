@@ -1,6 +1,6 @@
 Package: EcotaxaTools
 Title: Data wrangling and post-validation processing programs
-Version: 1.2.1.9000
+Version: 1.2.2.9000
 Authors@R: 
     person("Alex", "Barth", , "AB93@email.sc.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7154-6260"))
@@ -9,7 +9,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Imports:
     utils,
     svDialogs,
