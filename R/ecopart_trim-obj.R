@@ -42,7 +42,7 @@ trim_zoo <- function(zoo_list,
   possible <- c('less','greater','lessequal','greaterequal')
   
   if(!(operator %in% possible)) {
-    stop(paste0('Invalid operator. Check help ?trim_par'))
+    stop(paste0('Invalid operator. Check help ?trim_zoo'))
   }
   
   #check file entry
