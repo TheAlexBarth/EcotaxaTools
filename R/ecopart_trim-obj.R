@@ -103,7 +103,7 @@ trim_par <- function(par_list,
     
   } else if(is.etx_class(par_list, 'par_list')) {
     
-    return(trim_zoo_inner(par_list, trim_cat,
+    return(trim_par_inner(par_list, trim_cat,
                           trim_amt, operator))
     
   } else {
