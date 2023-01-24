@@ -163,6 +163,7 @@ calc_par_conc <- function(par, min_esd, max_esd, pixel_mm, img_vol) {
   keep_sizes <- which(par_vol_classes > min_vol & par_vol_classes < max_vol)
   par <- par[keep_sizes,]
   par_vol_classes <- par_vol_classes[keep_sizes]
+  volume_sampled <- volume_sampled[keep_sizes]
   
   #multiple by number of observations
   par_vol_tot <- par_vol_classes * par$nbr
