@@ -42,8 +42,6 @@ getTime <- function(time) {
 #' @param buffer range around sunset/sunrise to assign as twilight in hours
 #' @param tz timezone
 #' 
-#' @examples 
-#' timeOfDay("14:00:00", "06:00:00", "18:00:00", buffer = .5) #Should return day
 #' 
 #' @export
 #' @author Alex Barth

@@ -72,7 +72,7 @@ trim_zoo <- function(zoo_list,
 #' 
 #' A simple function to trim par list based on some criteria
 #' 
-#' @param zoo_list a zoo_list
+#' @param par_list a par_file list
 #' @param trim_cat the category to trim by
 #' @param trim_amt the amount to trim by 
 #' @param operator either 'less','greater','lessequal', or 'greaterequal'

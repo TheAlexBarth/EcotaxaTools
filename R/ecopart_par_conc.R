@@ -1,5 +1,3 @@
-
-
 #' Calculate particle concentration
 #' 
 #' caculate the particle concentration for a given size class

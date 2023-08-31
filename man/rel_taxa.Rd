@@ -13,8 +13,12 @@ rel_taxa(ecodf)
 This will take either a list or a df and get the relative abundance
 }
 \examples{
-man/examples/rel_taxa.R
+# For a single cast:
+ecopart_example$zoo_files$bats361_ctd1 |> rel_taxa()
 
+# For multiple casts:
+rel_taxa(ecopart_example)
+rel_taxa(ecopart_example$zoo_files)
 }
 \author{
 Alex Barth

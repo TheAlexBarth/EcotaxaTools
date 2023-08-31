@@ -58,9 +58,8 @@ calc_ellps_vol  <-  function(major, minor, pixel_mm) {
 #' @param area the area in pixels for a vignette
 #' @export
 calc_sph_vol <- function(area, pixel_mm) {
-  area_mmsq <- area * pixel_mm^2 
-  vol_mmcu <- (sqrt(area_mmsq)/pi)^3 * (4/3) * pi
   
+  vol_mmcu <- (area_to_esd(area, pixel_mm)/2)^3 * (4/3) * pi
   return(vol_mmcu)
 }
 
@@ -77,3 +76,16 @@ get_zoo_df_features <- function(zoo_df) {
               area = area))
 }
 
+#' Convert Area to ESD
+#' 
+#' If only the area of pixels are given you can convert it
+#' to the ESD 
+#' 
+#' @param area the area in pixels
+#' @param pixel_mm the pixel to mm conversion (not squared)
+#' @export
+area_to_esd <- function(area, pixel_mm) {
+  area_mmsq <- area * pixel_mm^2
+  r <- sqrt(area_mmsq/pi)
+  return(2*r)
+}

@@ -5,6 +5,7 @@
 #' @param par_conc_df a particle conc df
 #' @param ... arguments to pass to \code{geom_smooth} can set gam or loess, span, etc
 single_par_plot <- function(par_conc_df, ...) {
+  depth <- par_conc <- NULL
   outplot <- ggplot(par_conc_df) +
     geom_point(aes(x = depth, y = par_conc), alpha = 0.25)+
     geom_smooth(aes(x = depth, y = par_conc), size = 1,
@@ -22,6 +23,7 @@ single_par_plot <- function(par_conc_df, ...) {
 #' @import ggplot2
 #' @inheritParams single_par_plot
 bin_par_plot <- function(par_conc_df, ...) {
+  depth <- par_conc <- esd_bin <-  NULL
   outplot <- ggplot(par_conc_df) +
     geom_point(aes(x = depth, y = par_conc, col = esd_bin), alpha = 0.25)+
     geom_smooth(aes(x = depth, y = par_conc, col = esd_bin),

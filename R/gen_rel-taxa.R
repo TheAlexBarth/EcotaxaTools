@@ -4,7 +4,7 @@
 #' 
 #' @param ecodf a list, data frame, or ecopart_obj
 #' 
-#' @examples man/examples/rel_taxa.R
+#' @example man/examples/rel_taxa.R
 #' 
 #' @export
 #' @author Alex Barth

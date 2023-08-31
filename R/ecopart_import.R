@@ -63,7 +63,6 @@ ecopart_file_check <- function(par_fnames, zoo_fnames){
 #' @param dat_path the path in your computer to the file
 #' @param trim_to_zoo option to trim profiles for those where zoops are available
 #' 
-#' @example man/examples/ecopart_import.R
 #' 
 #' @export
 #' 

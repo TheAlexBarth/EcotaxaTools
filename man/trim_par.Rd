@@ -7,13 +7,13 @@
 trim_par(par_list, trim_cat, trim_amt, operator)
 }
 \arguments{
+\item{par_list}{a par_file list}
+
 \item{trim_cat}{the category to trim by}
 
 \item{trim_amt}{the amount to trim by}
 
 \item{operator}{either 'less','greater','lessequal', or 'greaterequal'}
-
-\item{zoo_list}{a zoo_list}
 }
 \description{
 A simple function to trim par list based on some criteria

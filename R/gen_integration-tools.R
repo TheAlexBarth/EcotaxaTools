@@ -79,10 +79,7 @@ integration_matcher <- function(df,...) {
 #' @export
 integrate_all <- function(df, need_format = F, ...){
   if(need_format) {
-    info_cols <- get_bin_limtis(df$db)
-    df$min_d <- info_cols$min_d
-    df$max_d <- info_cols$max_d
-    df$mp <- info_cols$mp
+    df <- bin_format(df)
   }
   
   # a little fix for old code:

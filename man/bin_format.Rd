@@ -4,10 +4,12 @@
 \alias{bin_format}
 \title{Format Bins}
 \usage{
-bin_format(df)
+bin_format(df, col = "db")
 }
 \arguments{
-\item{df}{a dataframe which is an etx_conc_obj instance}
+\item{df}{a dataframe with a column formatted as bins}
+
+\item{col}{the column formatted as bins, default db}
 }
 \description{
 Takes a concentration object and will format the bins

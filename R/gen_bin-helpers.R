@@ -1,16 +1,20 @@
-#' bin_format_check
-#' returns true if all character of the vector match the '(#,#]' format
-#'
-#' @param input input from higher function
+#' Format Bins
+#' 
+#' Takes a concentration object and will format the bins
+#' to have min_d, max_d, and mp (mid_point)
+#' 
+#' @param df a dataframe with a column formatted as bins
+#' @param col the column formatted as bins, default db
+#' 
+#' @export
 #' @author Alex Barth
-bin_format_check <- function(input) {
-  if(all(grepl('^\\((.*)\\,(.*)\\]',input,perl = T))) {
-    return(TRUE)
-  } else if (! is.character(input)) {
-    stop('input must be a character, check if it was left as a factor')
-  } else{
-    return(FALSE)
+bin_format <- function(df, col = 'db') {
+  if(col == 'db') {
+    rdf <- bin_format_depth(df)
+  } else {
+    rdf <- bin_format_general(df, col = col)
   }
+  return(rdf)
 }
 
 #' add_zeros
@@ -50,6 +54,21 @@ add_zeros <- function(df, col_name) {
   return(rdf)
 }
 
+#' bin_format_check
+#' returns true if all character of the vector match the '(#,#]' format
+#'
+#' @param input input from higher function
+#' @author Alex Barth
+bin_format_check <- function(input) {
+  if(all(grepl('^\\((.*)\\,(.*)\\]',input,perl = T))) {
+    return(TRUE)
+  } else if (! is.character(input)) {
+    stop('input must be a character, check if it was left as a factor')
+  } else{
+    return(FALSE)
+  }
+}
+
 #' get_bin_limits
 #' This function pulls bin limits from the categorys made by the cut() function
 #'
@@ -57,7 +76,7 @@ add_zeros <- function(df, col_name) {
 #' 
 #' @export
 #' @author Alex Barth
-get_bin_limtis <- function(input) {
+get_bin_limits <- function(input) {
   ###
   # Initial conditions check
   ###
@@ -66,31 +85,48 @@ get_bin_limtis <- function(input) {
     stop('input vector is not the correct format -- requires (###,###] format')
   }
   
-  min_depth <- as.numeric(gsub('\\((.*)\\,.*','\\1',input))
-  max_depth <- as.numeric(gsub('\\(.*\\,(.*)\\]','\\1',input))
+  min_lim <- as.numeric(gsub('\\((.*)\\,.*','\\1',input))
+  max_lim <- as.numeric(gsub('\\(.*\\,(.*)\\]','\\1',input))
   
-  mp <- (min_depth + max_depth) / 2 #calc mid_point
+  mp <- (min_lim + max_lim) / 2 #calc mid_point
   
-  ret_list <- list(min_d = min_depth,max_d = max_depth,
+  ret_list <- list(min = min_lim,
+                   max = max_lim,
                    mp = mp)
   return(ret_list)
 }
 
-#' Format Bins
+#' Legacy in interior for bin format
 #' 
-#' Takes a concentration object and will format the bins
-#' to have min_d, max_d, and mp (mid_point)
+#' same as general but will return formatted columns with _d
 #' 
-#' @param df a dataframe which is an etx_conc_obj instance
-#' 
-#' @export
-#' @author Alex Barth
-bin_format <- function(df) {
-  info_cols <- get_bin_limtis(df$db)
+#' @param df the data frame
+bin_format_depth <- function(df) {
+  info_cols <- get_bin_limits(df$db)
   rdf <- df
-  rdf$min_d <- info_cols$min_d
-  rdf$max_d <- info_cols$max_d
+  rdf$min_d <- info_cols$min
+  rdf$max_d <- info_cols$max
   rdf$mp <- info_cols$mp
+  return(rdf)
+}
+
+#' Interior for bin format
+#' 
+#' Generalized and will only provide min/max/mp columns
+#' 
+#' @param df the data frame
+#' @param col character name of column to format
+bin_format_general <- function(df, col) {
+  info_cols <- get_bin_limits(df[[col]])
+  
+  min_name <- paste0("min_", col)
+  max_name <- paste0('max_',col)
+  mp_name <- paste0('mp_', col)
+  
+  rdf <- df
+  rdf[[min_name]] <- info_cols$min
+  rdf[[max_name]] <- info_cols$max
+  rdf[[mp_name]] <- info_cols$mp
   return(rdf)
 }
 

@@ -1,5 +1,6 @@
 #' ggplot color selection
 #' 
+#' @importFrom grDevices hcl
 #' @param n number to ID
 gg_color_hue <- function(n) {
   hues = seq(15, 375, length = n + 1)

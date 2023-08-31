@@ -5,6 +5,8 @@
 #' 
 #' @param input the input of object to class check
 #' @param classCheck the class to check against
+#' 
+#' @export
 is.etx_class <- function(input, classCheck) {
   if(any(class(input) == classCheck)) {
     return(TRUE)
