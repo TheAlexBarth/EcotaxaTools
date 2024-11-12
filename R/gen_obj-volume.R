@@ -86,6 +86,6 @@ get_zoo_df_features <- function(zoo_df) {
 #' @export
 area_to_esd <- function(area, pixel_mm) {
   area_mmsq <- area * pixel_mm^2
-  r <- sqrt(area_mmsq/pi)
+  r <- sqrt(area_mmsq)/pi
   return(2*r)
 }
